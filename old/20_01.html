@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Trouble</title>
+	<link rel="stylesheet" href="styles/index.css" />
+</head>
+<body>
+	<div class="field"></div>
+<!--	<script type="module" src="scripts/index.js"></script> -->
+
+<script>
+
+	//const radius = Math.round(Math.min(window.screen.width, window.screen.height)*2/3);
+
+	fieldDiv = document.querySelector('.field');
+
+	const fragment = document.createDocumentFragment();
+
+	// получить высоту родительского div'а (те поля)
+	const halfFieldHeight = Math.round(
+		parseInt(
+			window.getComputedStyle(fieldDiv).height
+		)/ 2
+	);
+
+	// получить высоту слота
+	const halfFieldSlotHeight = 20;//Math.round(Number(fieldDiv.style.height) / 2);
+	const radius = halfFieldHeight - halfFieldSlotHeight;
+
+	const slotsNum = 28; // число слотов
+
+    for (let i = 0; i < slotsNum; i++)
+	{
+		const theta = 2 * Math.PI * i / slotsNum; // угол
+
+		const divItem = document.createElement('div');
+		divItem.classList.add('feildSlot'); // ! возможно, лучше className
+
+
+		
+		const x = Math.round(radius * Math.cos(theta));
+        const y = Math.round(radius * Math.sin(theta));
+        //divItem.posx = Math.round(radius * Math.cos(theta)) + 'px';
+        //divItem.posy = Math.round(radius * Math.sin(theta)) + 'px';
+		//[divItem.style.???, divItem.style.???] = ()
+
+        divItem.style.top = (halfFieldHeight - y) + 'px';
+        divItem.style.left = (halfFieldHeight + x) + 'px';
+
+		fragment.appendChild(divItem);		
+	}
+
+	fieldDiv.appendChild(fragment);
+	
+
+</script>
+
+<noscript>
+	
+class Player // конструктор не нужен
+{
+	startPosition;
+	home = 4; // или лучше сделать массивом пешек?
+	color;
+	pawns = []; // пешки на поле
+	blockedFinishSlots = []; // заятые слоты финиша
+	home; // число пешек в доме
+
+	hasPawnOnPosition(pos)
+	{
+		for(p of pawns)
+		{
+			if (p.position === pos)
+			{
+				return true;
+			}
+		}
+	}
+}
+
+
+class Pawn
+{
+	/*
+	* позиция пешки на поле
+	* @type {Number}
+	*/
+	position;
+
+	// здесь могут быть функции, отвечающие за отрисовку пешки на field, получающие feild как параметр
+	// функция удаления пешки (при перемещении в финишный слот)
+	// функция перемещения пешки в дом
+	// функция добавленя пешки на позицию
+	// перемещения пешки  на новую позицию, которой передают field
+
+}
+
+class Cube
+{
+	number;	// решил сохранить число, потому что если пользователь
+	generateNumber()
+	{
+
+	}
+}
+
+class Game
+{
+	constructor()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			this.players.append(new Player());
+		}
+	}
+	currentPlayer;
+	players = [];
+	getNextPlayer()
+	{
+
+	}
+}
+
+class Field
+{
+	constructor()
+	{
+		const radius = Math.round(Math.min(window.screen.width, window.screen.height)*2/3);
+		console.log(radius); 
+		for(int i = 0; i < 28; i++)
+		{
+
+		}
+
+	}
+
+	fieldSlots; // массив div'ов
+}
+
+
+// как будто лучше canvas
+// а не будет ли лучше div'ы с прозрачными svg, которым чз css можно давать цвет
+
+
+// создать fragment
+// в цикле заполнить его div'ами - слотами доски
+// создать массив из фрагмента
+// всавить фрагмент в документ
+// позиции - буквально индексы элементов массива
+
+// при перемещении пешки со слота
+// снять eventListener с старого слота и добавить на новый,
+// убрать тег svg со старой и добавить на новую
+// а на div стоит eventListener
+
+
+
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+body {
+	height: 100vh;
+	margin: 0px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.field {
+	height: 700px;
+	width: 700px;
+	min-height: 300px;
+	min-width: 300px;
+	color: black;
+	/*
+	margin-top: 50px;
+	display: inline-block;
+	margin: auto;
+	*/
+}
+
+.feildSlot {
+	/*хотелось бы задать высоту и ширину в процентах от родителя*/
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	border-radius: 50%;
+	border: 1px solid grey;
+	box-sizing: border-box;
+	
+}
+
+
+.activeSlot {
+	box-shadow: 0px 0px 10px 5px rgba(33, 90, 208, .20);
+	border-color: black;
+	cursor: pointer;
+}
+

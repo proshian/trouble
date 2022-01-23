@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8" />
+	<title>Trouble</title>
+	<link rel="stylesheet" href="styles/index.css" />
+</head>
+<body>
+	<div class="field"></div>
+
+<script type="module" src="scripts/index.js">></script>
+<script>
+
+	
+	
+
+
+	
+
+</script>
+
+<noscript>
+	
+class Player // конструктор не нужен
+{
+	startPosition;
+	home = 4; // или лучше сделать массивом пешек?
+	color;
+	pawns = []; // пешки на поле
+	blockedFinishSlots = []; // заятые слоты финиша
+	home; // число пешек в доме
+
+	hasPawnOnPosition(pos)
+	{
+		for(p of pawns)
+		{
+			if (p.position === pos)
+			{
+				return true;
+			}
+		}
+	}
+}
+
+
+class Pawn
+{
+	/*
+	* позиция пешки на поле
+	* @type {Number}
+	*/
+	position;
+
+	// здесь могут быть функции, отвечающие за отрисовку пешки на field, получающие feild как параметр
+	// функция удаления пешки (при перемещении в финишный слот)
+	// функция перемещения пешки в дом
+	// функция добавленя пешки на позицию
+	// перемещения пешки  на новую позицию, которой передают field
+
+}
+
+class Cube
+{
+	number;	// решил сохранить число, потому что если пользователь
+	generateNumber()
+	{
+
+	}
+}
+
+class Game
+{
+	constructor()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			this.players.append(new Player());
+		}
+	}
+	currentPlayer;
+	players = [];
+	getNextPlayer()
+	{
+
+	}
+}
+
+class Field
+{
+	constructor()
+	{
+		const radius = Math.round(Math.min(window.screen.width, window.screen.height)*2/3);
+		console.log(radius); 
+		for(int i = 0; i < 28; i++)
+		{
+
+		}
+
+	}
+
+	fieldSlots; // массив div'ов
+}
+
+
+// как будто лучше canvas
+// а не будет ли лучше div'ы с прозрачными svg, которым чз css можно давать цвет
+
+
+// создать fragment
+// в цикле заполнить его div'ами - слотами доски
+// создать массив из фрагмента
+// всавить фрагмент в документ
+// позиции - буквально индексы элементов массива
+
+// при перемещении пешки со слота
+// снять eventListener с старого слота и добавить на новый,
+// убрать тег svg со старой и добавить на новую
+// а на div стоит eventListener
+
+
+
+</noscript>
+
+</body>
+</html>
