@@ -46,7 +46,8 @@ for (let i = 0; i < slotsNum; i++) {
 	const slot = document.createElement('button');
 	slot.type = "button";
 	slot.classList.add('feildSlot'); // ! возможно, лучше className
-	
+	slot.index = i;	// если бы HTML писал руками, сделал бы <button data-index = "число">
+					// потом парсил бы в число или использовал бы Number()
 
 	slot.innerText = i;	// ! убрать
 

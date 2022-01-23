@@ -1,5 +1,7 @@
 export class Player {
 
+	static allPawns = 4; // у игрока всегда суммарное число пешек равно 4
+
 	static colors = new Set(
 		['red', 'green', 'yellow', 'blue']
 	);
@@ -28,7 +30,7 @@ export class Player {
 	blockedFinishSlots = new Set(); // список занятых слотов финиша // массив number // ! что лучше массив или множество?
 	pawnsOnField = new Set();	// массив number
 	get homePawnsNum() {  // number
-		return 4 - this.blockedFinishSlots.size - this.pawnsOnField.size;
+		return Player.allPawns - this.blockedFinishSlots.size - this.pawnsOnField.size;
 	}
 
 	hasPawnOnPosition(pos) {	// если нужна тотолько ради абстракции
