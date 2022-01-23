@@ -21,6 +21,8 @@ export class Player {
 		this.startPosition = startPosition;
 		this.color = color;
 		this.order = order;
+
+		this.hasPawnOnPosition = this.hasPawnOnPosition.bind(this);
     }
 
 	startPosition;
@@ -34,6 +36,6 @@ export class Player {
 	}
 
 	hasPawnOnPosition(pos) {	// если нужна тотолько ради абстракции
-		return pawnsOnField.has(pos);
+		return this.pawnsOnField.has(pos);
 	}
 }
