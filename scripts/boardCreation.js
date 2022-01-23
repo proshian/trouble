@@ -35,7 +35,7 @@ const radius = halfFieldHeight - halfFieldSlotHeight;
 
 const slotsNum = 28; // число слотов
 
-const offset = 0;
+const offset = 0;	// начальный угол для первогос слота
 
 for (let i = 0; i < slotsNum; i++) {
 

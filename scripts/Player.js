@@ -27,9 +27,9 @@ export class Player {
 	color;
 	order;
 
-	blockedFinishSlots = new Set(); // список занятых слотов финиша // массив number // ! что лучше массив или множество?
-	pawnsOnField = new Set();	// массив number
-	get homePawnsNum() {  // number
+	blockedFinishSlots = new Set(); // занятые слоты финиша // множество number 
+	pawnsOnField = new Set();	// номера слотов поля, содержащих пешки данного игрока // множество number
+	get homePawnsNum() {  // число пешек в доме // number
 		return Player.allPawns - this.blockedFinishSlots.size - this.pawnsOnField.size;
 	}
 
