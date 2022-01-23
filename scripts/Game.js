@@ -26,6 +26,11 @@ export class Game
         this.throwDice();
     }
 
+    static movePawnToHome(victimPlayer, attackerPlayer, curPos, curPosSlot) { // ! Возмжно, лучше сделать методом Player'а
+        victimPlayer.pawnsOnField.delete(curPos);
+        curPosSlot.style.backgroundColor = attackerPlayer.color;
+    }
+
     move (event) {
         // здесь обработчик EventListener'a
         console.log("curOrder = " + this.curOrder);
@@ -34,12 +39,14 @@ export class Game
 
         const clickedSlotIndex = Number(event.target.dataset?.index); // ! Возможно, лучше parseInt
 
-        if (!clickedSlotIndex) {
+        // можно было бы поставить строгое сравнение, ведь ?. в случае неудачи возвращает undefined
+        // на всякий случай ешил сравнивать с любой пустотой
+        if (clickedSlotIndex == undefined) {
             // throw new Error("Something's wrong! A slot doesn't have an index!");
             return console.log("Чтобы сделать ход необходимо кликнуть по фишке");
         }
 
-
+        
 
         const currentPlayer = this.players[this.curOrder];
         console.log(currentPlayer);
@@ -62,14 +69,13 @@ export class Game
                 if (player === currentPlayer) {
                     return "Ход невозможен. Пешка встает на вашу другую пешку"
                 }
-                player.pawnsOnField.delete(newPos);
-                event.target.style.backgroundColor = currentPlayer.color;
+                Game.movePawnToHome(player, currentPlayer, newPos, event.target)
                 return;
                 //break;
             }
         }
 
-        currentPlayer.pawnsOnField.delete(clickedSlotIndex);
+        currentPlayer.pawnsOnField.delete(clickedSlotIndex); // ! Эти две аперации можно объединить в одну
         currentPlayer.pawnsOnField.add(newPos);
 
         event.target.style.backgroundColor = "";
