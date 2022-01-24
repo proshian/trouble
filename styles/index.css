@@ -1,42 +1,32 @@
 body {
-	height: 100vh;
+	height: 100vmin;
 	margin: 0px;
+}
 
+.field {
+	height: 70vmin;
+	width: 70vmin;
+	min-height: 300px;
+	min-width: 300px;
+	color: black;
+}
+
+.current-player-color-indicator {
+	width: 18vmin;
+	height: 18vmin;
+	background-color: black;
+	border-radius: 12%;
+}
+
+.centering-parent {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.field {
-	/*height: 700px;
-	width: 700px;*/
-	height: 70vh;
-	width: 70vh;
-	min-height: 300px;
-	min-width: 300px;
-	color: black;
-	
-	display: flex;
-    justify-content: center;
-    align-items: center;
-	
-	/*
-	margin-top: 50px;
-	display: inline-block;
-	margin: auto;
-	*/
-}
-
-.current-player-color-indicator {
-	width: 12vh;
-	height: 12vh;
-	background-color: black;
-}
-
 .feildSlot {
-	/*хотелось бы задать высоту и ширину в процентах от родителя*/
-	height: 5.7vh;
-	width: 5.7vh;
+	height: 5.7vmin;
+	width: 5.7vmin;
 	position: absolute;
 	border-radius: 50%;
 	border: 1px solid grey;
@@ -50,3 +40,9 @@ body {
 	cursor: pointer;
 }
 
+.dice {
+	width: 10vmin;
+	height: 10vmin;
+	background: no-repeat;
+	background-size: cover;
+}

@@ -1,15 +1,13 @@
-export class Game
-{
+export class Game {
     players; // массив игроков
-    diceNumber;
+    dice; // Dice
     curOrder; // нужно хранить, потому что если игрок ткнул не туда, кубик не бросается снова
 
     static #slotsNum = 28; // число слотов на доске
 
-    throwDice() {
-        const diceSides = 6;
-        this.diceNumber = Math.floor(Math.random() * diceSides) + 1;
-    }
+    //update
+
+    
 
     static getSlotByIndex(index) {
         return document.querySelector(`div.field>.feildSlot[data-index = "${index}"]`);
@@ -19,10 +17,16 @@ export class Game
         return (curPos + diceNum) % Game.#slotsNum;
     }
 
-    constructor(players) {
+    updateColorIndicator() {
+        this.colorIndicator.style.backgroundColor = this.players[this.curOrder].color;
+    }
+
+    constructor(players, dice, colorIndicator) {
         this.players = players;
         this.curOrder = 0;
-        this.throwDice();
+        this.dice = dice;
+        this.colorIndicator = colorIndicator;
+        this.updateColorIndicator()
     }
 
     static movePawnToHome(victimPlayer, attackerPlayer, curPos, curPosSlot) { // ! Возмжно, лучше сделать методом Player'а
@@ -31,10 +35,11 @@ export class Game
     }
 
     move(event) {
+        console.log(this.dice);
         // здесь обработчик EventListener'a
         console.log("curOrder = " + this.curOrder);
         //const diceNumber = Game.throwDice(); // раньше передавал параметром
-        console.log("dice" + this.diceNumber);
+        console.log("dice" + this.dice.num);
 
         const clickedSlotIndex = Number(event.target.dataset?.index); // ! Возможно, лучше parseInt
 
@@ -45,7 +50,6 @@ export class Game
             return console.log("Чтобы сделать ход необходимо кликнуть по фишке");
         }
 
-        
 
         const currentPlayer = this.players[this.curOrder];
         console.log(currentPlayer);
@@ -57,7 +61,7 @@ export class Game
                 Кликните по фишке этого цвета или пропустите ход`;
         }
 
-        const newPos = Game.#getPotentialNewPos(clickedSlotIndex, this.diceNumber);
+        const newPos = Game.#getPotentialNewPos(clickedSlotIndex, this.dice.num);
 
         console.log("newPos = " + newPos);
 
@@ -81,6 +85,8 @@ export class Game
         Game.getSlotByIndex(newPos).style.backgroundColor = currentPlayer.color;
 
         this.curOrder = (this.curOrder + 1) % 4;
-        this.throwDice();
+        this.dice.throwDice();
+
+        this.updateColorIndicator()
     }
 }

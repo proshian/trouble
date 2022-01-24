@@ -1,10 +1,11 @@
-import { slotArray } from './boardCreation.js';
+import { boardCreation } from './boardCreation.js';
 import { Player } from './Player.js';
 import { Game } from './Game.js';
+import { Dice } from './Dice.js';
 
 //console.log(slotArray);
 
-
+boardCreation();
 const players = [];
 
 // цикл ниже создает имитацию состояния игры
@@ -19,7 +20,13 @@ for (let i = 0; i < 4; i++) {
 	players.push(player);
 }
 
-const game = new Game(players);
+const diceElement = document.querySelector('.dice');
+const dice = new Dice(diceElement);
+const colorIndicator = document.querySelector('.current-player-color-indicator');
+
+const game = new Game(players, dice, colorIndicator);
+
+
 
 const field = document.querySelector('.field');
 
