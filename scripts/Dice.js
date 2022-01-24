@@ -9,7 +9,7 @@ export class Dice {
 	static diceSides = 6;
 
 	/** @type {string}  **/
-	static diceImgDirectory = '/img/dice/';
+	static diceImgDirectory = './img/dice/';
 
 	/** массив строк **/
 	static diceImgNames = ['1.svg', '2.svg', '3.svg', '4.svg', '5.svg', '6.svg'];
