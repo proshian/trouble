@@ -1,6 +1,9 @@
 body {
-	height: 100vmin;
 	margin: 0px;
+}
+
+.game {
+	height: 100vh;
 }
 
 .field {
@@ -24,13 +27,16 @@ body {
 	align-items: center;
 }
 
-.feildSlot {
+.slot {
 	height: 5.7vmin;
 	width: 5.7vmin;
-	position: absolute;
 	border-radius: 50%;
 	border: 1px solid grey;
 	box-sizing: border-box;
+}
+
+.feildSlot {
+	position: absolute;
 }
 
 
@@ -45,4 +51,15 @@ body {
 	height: 10vmin;
 	background: no-repeat;
 	background-size: cover;
+}
+
+.home {
+	/*width: 10vmin;
+	height: 10vmin;
+	background-color: black;*/
+}
+
+.home-slot {
+	background-color: transparent;
+	border: none;
 }

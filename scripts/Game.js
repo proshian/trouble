@@ -5,10 +5,6 @@ export class Game {
 
     static #slotsNum = 28; // число слотов на доске
 
-    //update
-
-    
-
     static getSlotByIndex(index) {
         return document.querySelector(`div.field>.feildSlot[data-index = "${index}"]`);
     }

@@ -10,13 +10,7 @@ export function boardCreation() {
 
 
 
-	function getHalfHeight(element) {
-		return Math.round(
-			parseInt(
-				window.getComputedStyle(element).height
-			) / 2
-		);
-	}
+	
 
 	// получить высоту родительского div'а (те поля)
 	const halfFieldHeight = getHalfHeight(field);
@@ -24,7 +18,7 @@ export function boardCreation() {
 	// чтобы получить высоту слота
 	// создадим и удалим один элемент
 	const slot = document.createElement('button');
-	slot.classList.add('feildSlot'); // ! возможно, лучше className
+	slot.classList.add('slot'); // ! возможно, лучше className
 	field.appendChild(slot);
 
 	const halfFieldSlotHeight = getHalfHeight(slot);
@@ -47,6 +41,7 @@ export function boardCreation() {
 		const slot = document.createElement('button');
 		slot.type = "button";
 		slot.classList.add('feildSlot'); // ! возможно, лучше className
+		slot.classList.add('slot');
 		slot.dataset.index = i;	// добавляет атрибут data-index, i приводится к строке
 
 		slot.innerText = i;	// ! убрать
@@ -62,6 +57,14 @@ export function boardCreation() {
 		//slotArray.push(slot);
 	}
 
-
 	field.appendChild(fragment);
+}
+
+
+function getHalfHeight(element) {
+	return Math.round(
+		parseInt(
+			window.getComputedStyle(element).height
+		) / 2
+	);
 }
