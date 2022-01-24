@@ -72,9 +72,7 @@ export class Game {
                 if (player === currentPlayer) {
                     return "Ход невозможен. Пешка встает на вашу другую пешку"
                 }
-                Game.movePawnToHome(player, currentPlayer, newPos, event.target)
-                return;
-                //break;
+                Game.movePawnToHome(player, currentPlayer, newPos, event.target);
             }
         }
 
