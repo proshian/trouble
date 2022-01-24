@@ -12,15 +12,25 @@ body {
 	width: 700px;*/
 	height: 70vh;
 	width: 70vh;
-
 	min-height: 300px;
 	min-width: 300px;
 	color: black;
+	
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	
 	/*
 	margin-top: 50px;
 	display: inline-block;
 	margin: auto;
 	*/
+}
+
+.current-player-color-indicator {
+	width: 12vh;
+	height: 12vh;
+	background-color: black;
 }
 
 .feildSlot {
@@ -31,7 +41,6 @@ body {
 	border-radius: 50%;
 	border: 1px solid grey;
 	box-sizing: border-box;
-	
 }
 
 

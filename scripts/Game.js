@@ -21,7 +21,6 @@ export class Game
 
     constructor(players) {
         this.players = players;
-        this.move = this.move.bind(this);
         this.curOrder = 0;
         this.throwDice();
     }
@@ -31,7 +30,7 @@ export class Game
         curPosSlot.style.backgroundColor = attackerPlayer.color;
     }
 
-    move (event) {
+    move(event) {
         // здесь обработчик EventListener'a
         console.log("curOrder = " + this.curOrder);
         //const diceNumber = Game.throwDice(); // раньше передавал параметром
