@@ -18,16 +18,19 @@ boardCreation();
 const players = [];
 
 const colors = Array.from(Player.colors)
-shuffleArray(colors);
+//shuffleArray(colors);
 
 const startPositions = Array.from(Player.startPositions)
-shuffleArray(startPositions);
+//shuffleArray(startPositions);
+
+const homes = document.querySelectorAll('.home');
+
 
 // цикл ниже создает имитацию состояния игры
 for (let i = 0; i < 4; i++) {
 	const color = colors[i];	// ! изменить
 	const startPosition = startPositions[i]; // ! изменить
-	const player = new Player(startPosition, color, i);
+	const player = new Player(startPosition, color, i, homes[i]);
 	/*player.pawnsOnField.add(startPosition);
 	const startSlot = Game.getSlotByIndex(startPosition);
 

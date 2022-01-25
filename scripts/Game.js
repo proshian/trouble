@@ -13,6 +13,10 @@ export class Game {
         return (curPos + diceNum) % Game.#slotsNum;
     }
 
+    static #getPreviousPos(pos) {
+        return (pos + Game.#slotsNum - 1) % Game.#slotsNum;
+    }
+
     updateColorIndicator() {
         this.colorIndicator.style.backgroundColor = this.players[this.curOrder].color;
     }
@@ -22,21 +26,21 @@ export class Game {
         this.curOrder = 0;
         this.dice = dice;
         this.colorIndicator = colorIndicator;
-        this.updateColorIndicator()
+        this.updateColorIndicator();
+
+        this.moveFromHome = this.moveFromHome.bind(this); // ! не уверен, что все еще нужно
     }
 
-    static movePawnToHome(victimPlayer, attackerPlayer, curPos, curPosSlot) { // ! Возмжно, лучше сделать методом Player'а
+    static #movePawnToHome(victimPlayer, attackerPlayer, curPos, curPosSlot) { // ! Возмжно, лучше сделать методом Player'а
         victimPlayer.pawnsOnField.delete(curPos);
         curPosSlot.style.backgroundColor = attackerPlayer.color;
     }
 
 
     move(event) {
-        const homes = document.querySelectorAll('.home');
-
-        for (const home of homes) {
-            if (home.contains(event.target)) {
-                this.moveFromHome(event);
+        for (const player of this.players) {
+            if (player.home.contains(event.target)) {
+                this.moveFromHome(player);
                 return;
             }
         }
@@ -48,8 +52,22 @@ export class Game {
         }
     }
 
-    moveFromHome(event) {
+    moveFromHome(player) {
+        console.log(player);
+        player.startPosition;
 
+
+        if (player != this.players[this.curOrder]) // ! возможно стоит завернуть в get currentPlayer()
+            return "you are not the curent player";
+
+        console.log(this);
+
+        const potentialNewPos = Game.#getPotentialNewPos(
+            Game.#getPreviousPos(player.startPosition),
+            this.dice.num
+        );
+
+        console.log(potentialNewPos);
     }
 
     moveFromField(event) {
@@ -90,7 +108,7 @@ export class Game {
                 if (player === currentPlayer) {
                     return "Ход невозможен. Пешка встает на вашу другую пешку"
                 }
-                Game.movePawnToHome(player, currentPlayer, newPos, event.target);
+                Game.#movePawnToHome(player, currentPlayer, newPos, event.target);
             }
         }
 

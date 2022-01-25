@@ -11,7 +11,7 @@ export class Player {
 						// это же просто (prevEl+7)%28
 	);
 
-	constructor(startPosition, color, order) {
+	constructor(startPosition, color, order, home) {
 		if (!Player.startPositions.has(startPosition))
 			throw new Error(`Incorrect start position value: "${startPosition}"`);
 
@@ -21,13 +21,17 @@ export class Player {
 		this.startPosition = startPosition;
 		this.color = color;
 		this.order = order;
+		this.home = home;
+		this.home.style.backgroundColor = this.color;
 
 		this.hasPawnOnPosition = this.hasPawnOnPosition.bind(this);
+
     }
 
 	startPosition;
 	color;
 	order;
+	home;
 
 	blockedFinishSlots = new Set(); // занятые слоты финиша // множество number 
 	pawnsOnField = new Set();	// номера слотов поля, содержащих пешки данного игрока // множество number
