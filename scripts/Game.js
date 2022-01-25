@@ -30,7 +30,29 @@ export class Game {
         curPosSlot.style.backgroundColor = attackerPlayer.color;
     }
 
+
     move(event) {
+        const homes = document.querySelectorAll('.home');
+
+        for (const home of homes) {
+            if (home.contains(event.target)) {
+                this.moveFromHome(event);
+                return;
+            }
+        }
+
+        const field = document.querySelector('.field');
+
+        if (field.contains(event.target)) {
+            this.moveFromField(event);
+        }
+    }
+
+    moveFromHome(event) {
+
+    }
+
+    moveFromField(event) {
         console.log(this.dice);
         // здесь обработчик EventListener'a
         console.log("curOrder = " + this.curOrder);

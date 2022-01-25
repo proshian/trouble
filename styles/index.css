@@ -42,7 +42,8 @@ body {
 
 
 .activeSlot {
-	box-shadow: 0px 0px 10px 5px rgb(0 0 0 / 0.2);
+	/*box-shadow: 0px 0px 10px 5px rgb(0 0 0 / 0.2);*/
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 	border-color: black;
 	cursor: pointer;
 	transition: 0.3s;
@@ -63,6 +64,8 @@ body {
 	/*width: 10vmin;
 	height: 10vmin;
 	background-color: black;*/
+	margin: 0px 1vmin;
+	/*border: solid 0.5vmin;*/
 }
 
 .home-slot {
