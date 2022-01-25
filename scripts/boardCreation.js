@@ -44,7 +44,7 @@ export function boardCreation() {
 		slot.classList.add('slot');
 		slot.dataset.index = i;	// добавляет атрибут data-index, i приводится к строке
 
-		slot.innerText = i;	// ! убрать
+		//slot.innerText = i;	// ! убрать
 
 		const x = Math.round(radius * Math.cos(theta)) + feildX;
 		const y = Math.round(radius * Math.sin(theta)) - feildY;

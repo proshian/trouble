@@ -72,3 +72,9 @@ body {
 	background-color: transparent;
 	border: none;
 }
+
+
+
+.pawn {
+	height: 4vh;
+}
