@@ -67,13 +67,12 @@ export class Game {
     move(event) {
        
         for (const player of this.players) {
+            // если клкнули по дому или дочернему элементу дома игрока player
             if (player.home.contains(event.target)) {
-               
                 this.moveFromHome(player);
                 return;
             }
         }
-
 
         const field = document.querySelector('.field');
 
@@ -136,7 +135,14 @@ export class Game {
     moveFromField(event) {
         // здесь обработчик EventListener'a
 
-        const clickedSlotIndex = Number(event.target.dataset?.index); // ! Возможно, лучше parseInt
+        const clickedSlot = event.target.closest(".feildSlot");
+
+        // сравниваю с любой пустотой на всякий случай
+        if (clickedSlot == null) {
+            return "You clicked an empty area of the field!";
+        }
+
+        const clickedSlotIndex = Number(clickedSlot.dataset?.index); // ! Возможно, лучше parseInt
 
         // можно было бы поставить строгое сравнение, ведь ?. в случае неудачи возвращает undefined
         // на всякий случай ешил сравнивать с любой пустотой
@@ -168,14 +174,14 @@ export class Game {
                     return "Ход невозможен. Пешка встает на вашу другую пешку"
                 }
                 Game.#movePawnToHome(player, currentPlayer, newPos, event.target);
+
             }
         }
 
         currentPlayer.pawnsOnField.delete(clickedSlotIndex); // ! Эти две аперации можно объединить в одну
         currentPlayer.pawnsOnField.add(newPos);
 
-        event.target.style.backgroundColor = "";
-        Game.getSlotByIndex(newPos).style.backgroundColor = currentPlayer.color;
+        Game.#movePawnElement(clickedSlot, Game.getSlotByIndex(newPos));
 
         this.curOrder = (this.curOrder + 1) % 4;
         this.dice.throwDice();
