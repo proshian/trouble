@@ -30,6 +30,11 @@ export class Game {
         this.updateColorIndicator();
 
         this.moveFromHome = this.moveFromHome.bind(this); // ! не уверен, что все еще нужно
+
+
+        for (const player of this.players) {
+            Game.getSlotByIndex(player.startPosition).style.backgroundColor = player.color;
+        }
     }
 
     static #movePawnToHome(victimPlayer, attackerPlayer, curPos) { // ! Возмжно, лучше сделать методом Player'а
@@ -95,6 +100,9 @@ export class Game {
         pawnImg.src = "img/pawn.svg";
         Game.getSlotByIndex(newPos).appendChild(pawnImg);
 
+        this.curOrder = (this.curOrder + 1) % 4;
+        this.dice.throwDice();
+        this.updateColorIndicator();
         console.log(newPos);
     }
 
