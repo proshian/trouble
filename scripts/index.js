@@ -28,10 +28,10 @@ for (let i = 0; i < 4; i++) {
 	const color = colors[i];	// ! изменить
 	const startPosition = startPositions[i]; // ! изменить
 	const player = new Player(startPosition, color, i);
-	player.pawnsOnField.add(startPosition);
+	/*player.pawnsOnField.add(startPosition);
 	const startSlot = Game.getSlotByIndex(startPosition);
 
-	startSlot.style.backgroundColor = color;
+	startSlot.style.backgroundColor = color;*/
 	players.push(player);
 }
 

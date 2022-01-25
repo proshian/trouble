@@ -82,3 +82,26 @@
     grid-column-start: 1;
     grid-column-end: 9;
 }
+
+
+.current-player-color-indicator {
+    background-color: red;
+    grid-row-start: 5;
+    grid-row-end: 7;
+    grid-column-start: 5;
+    grid-column-end: 7;
+}
+
+.centering-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dice {
+    width: 10vmin;
+    height: 10vmin;
+    background: no-repeat;
+    background-size: cover;
+    background-color:black;
+}
