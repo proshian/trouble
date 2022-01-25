@@ -7,8 +7,8 @@ body {
 }
 
 .field {
-	height: 70vmin;
-	width: 70vmin;
+	height: 65vmin;
+	width: 65vmin;
 	min-height: 300px;
 	min-width: 300px;
 	color: black;
@@ -21,7 +21,7 @@ body {
 	border-radius: 12%;
 }
 
-.centering-parent {
+.slot, .centering-parent {
 	display: flex;
 	justify-content: center;
 	align-items: center;
