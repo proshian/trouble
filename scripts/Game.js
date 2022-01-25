@@ -64,6 +64,19 @@ export class Game {
     }
 
 
+    static #movePawnElementToHome(fieldSlot, home) {
+        const homeSlots = home.children;
+        let lastEmptySlot;
+        for (const slot of homeSlots) {
+            if (slot.childElementCount) {
+                break;
+            }
+            lastEmptySlot = slot;
+        }
+
+        Game.#movePawnElement(fieldSlot, lastEmptySlot);
+    }
+
     move(event) {
        
         for (const player of this.players) {
@@ -112,6 +125,10 @@ export class Game {
                 }
 
                 Game.#movePawnToHome(playerInstance, player, newPos, event.target);
+                Game.#movePawnElementToHome(
+                    Game.getSlotByIndex(newPos),
+                    playerInstance.home
+                );
             }
         }
 
@@ -174,7 +191,10 @@ export class Game {
                     return "Ход невозможен. Пешка встает на вашу другую пешку"
                 }
                 Game.#movePawnToHome(player, currentPlayer, newPos, event.target);
-
+                Game.#movePawnElementToHome(
+                    Game.getSlotByIndex(newPos),
+                    player.home
+                );
             }
         }
 
