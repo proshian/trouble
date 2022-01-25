@@ -6,7 +6,8 @@ export class Game {
     static #slotsNum = 28; // число слотов на доске
 
     static getSlotByIndex(index) {
-        return document.querySelector(`div.field>.feildSlot[data-index = "${index}"]`);
+        //return document.querySelector(`div.field>.feildSlot[data-index = "${index}"]`);
+        return document.querySelector(`.feildSlot[data-index = "${index}"]`);
     }
 
     static #getPotentialNewPos(curPos, diceNum) {
@@ -31,19 +32,22 @@ export class Game {
         this.moveFromHome = this.moveFromHome.bind(this); // ! не уверен, что все еще нужно
     }
 
-    static #movePawnToHome(victimPlayer, attackerPlayer, curPos, curPosSlot) { // ! Возмжно, лучше сделать методом Player'а
+    static #movePawnToHome(victimPlayer, attackerPlayer, curPos) { // ! Возмжно, лучше сделать методом Player'а
         victimPlayer.pawnsOnField.delete(curPos);
-        curPosSlot.style.backgroundColor = attackerPlayer.color;
+        //curPosSlot.style.backgroundColor = attackerPlayer.color;
     }
 
 
     move(event) {
+       
         for (const player of this.players) {
             if (player.home.contains(event.target)) {
+               
                 this.moveFromHome(player);
                 return;
             }
         }
+
 
         const field = document.querySelector('.field');
 
@@ -53,29 +57,49 @@ export class Game {
     }
 
     moveFromHome(player) {
-        console.log(player);
-        player.startPosition;
-
-
+        
         if (player != this.players[this.curOrder]) // ! возможно стоит завернуть в get currentPlayer()
             return "you are not the curent player";
 
+        if (player.homePawnsNum === 0) {
+            return "you've got no pawns at home"
+        }
+
+        // ! 4 - это сколько всего пешек у игрока.
+        // Возможн, следует импортировтаь класс Player и использовать константу Player.allPawns
+        if (player.homePawnsNum != 4 && this.dice.num != 6) { 
+            return "you've got a free pawn and the dice number is not 6. Choose another pawn."
+        }
+
+
+
         console.log(this);
 
-        const potentialNewPos = Game.#getPotentialNewPos(
+        const newPos = Game.#getPotentialNewPos(
             Game.#getPreviousPos(player.startPosition),
             this.dice.num
         );
+        console.log(newPos);
+        for (const playerInstance of this.players) { // ! унифицировать эту проверку ( завести методод attackCheck() )
+            if (playerInstance.hasPawnOnPosition(newPos)) {
+                if (playerInstance === player) {
+                    return "Ход невозможен. Пешка встает на вашу другую пешку"
+                }
 
-        console.log(potentialNewPos);
+                Game.#movePawnToHome(playerInstance, player, newPos, event.target);
+            }
+        }
+
+        player.pawnsOnField.add(newPos);
+        const pawnImg = document.createElement('img');
+        pawnImg.src = "img/pawn.svg";
+        Game.getSlotByIndex(newPos).appendChild(pawnImg);
+
+        console.log(newPos);
     }
 
     moveFromField(event) {
-        console.log(this.dice);
         // здесь обработчик EventListener'a
-        console.log("curOrder = " + this.curOrder);
-        //const diceNumber = Game.throwDice(); // раньше передавал параметром
-        console.log("dice" + this.dice.num);
 
         const clickedSlotIndex = Number(event.target.dataset?.index); // ! Возможно, лучше parseInt
 
