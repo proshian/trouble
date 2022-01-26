@@ -2,6 +2,7 @@ export class Game {
     players; // массив игроков
     dice; // Dice
     curOrder; // нужно хранить, потому что если игрок ткнул не туда, кубик не бросается снова
+    gameDiv;
 
     static #slotsNum = 28; // число слотов на доске
 
@@ -42,10 +43,11 @@ export class Game {
         return this.players[this.curOrder];
     }
 
-    constructor(players, dice, colorIndicator) {
+    constructor(players, dice, colorIndicator, gameDiv) {
         this.players = players;
         this.curOrder = 0;
         this.dice = dice;
+        
         this.colorIndicator = colorIndicator;
         this.updateColorIndicator();
 
@@ -60,6 +62,16 @@ export class Game {
                 pawn.style.fill = player.color;
             }
         }
+
+
+
+        this.gameDiv = gameDiv;
+
+        this.gameDiv.addEventListener(
+            'click',
+            () => this.move(event)
+
+        )
     }
 
     static #movePawnToHome(victimPlayer, attackerPlayer, curPos) { // ! Возмжно, лучше сделать методом Player'а
@@ -107,8 +119,8 @@ export class Game {
 
 
     static #movePawnFromFToF(player, oldPos, newPos) {
-        currentPlayer.pawnsOnField.delete(clickedSlotIndex);
-        currentPlayer.pawnsOnField.add(newPos);
+        player.pawnsOnField.delete(oldPos);
+        player.pawnsOnField.add(newPos);
     }
 
 
@@ -164,7 +176,7 @@ export class Game {
         this.makeNextPlayerCurrentPlayer();
     }
 
-    // ! Возможно, лучше передавать не 
+    // ! Возможно, лучше передавать event.target
     moveFromField(event) {
         // ближайший родительский элемент (или сам элемент), явящийся слтоом поля
         const clickedSlot = event.target.closest(".feildSlot");

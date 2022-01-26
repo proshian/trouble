@@ -42,18 +42,10 @@ const diceElement = document.querySelector('.dice');
 const dice = new Dice(diceElement);
 const colorIndicator = document.querySelector('.current-player-color-indicator');
 
-const game = new Game(players, dice, colorIndicator);
+const gameDiv = document.querySelector('.game');
 
-const gameElement = document.querySelector('.game');
-
-const field = document.querySelector('.field');
+const game = new Game(players, dice, colorIndicator, gameDiv);
 
 
 
-gameElement.addEventListener(
-	'click',
-	() => game.move(event)		
-    
-)
-
-
+//const field = document.querySelector('.field');
