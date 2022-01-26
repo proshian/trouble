@@ -4,13 +4,14 @@ import { Game } from './Game.js';
 import { Dice } from './Dice.js';
 
 
-
+/*
 function shuffleArray(array) {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]];
 	}
 }
+*/
 
 //console.log(slotArray);
 
@@ -40,11 +41,12 @@ for (let i = 0; i < 4; i++) {
 
 const diceElement = document.querySelector('.dice');
 const dice = new Dice(diceElement);
-const colorIndicator = document.querySelector('.current-player-color-indicator');
 
+
+const colorIndicator = document.querySelector('.current-player-color-indicator');
 const gameDiv = document.querySelector('.game');
 
-const game = new Game(players, dice, colorIndicator, gameDiv);
+new Game(players, dice, colorIndicator, gameDiv);
 
 
 
