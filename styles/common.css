@@ -1,0 +1,9 @@
+.centering-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container {
+    height: 100vh;
+}

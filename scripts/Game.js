@@ -1,3 +1,7 @@
+// !!!!!!! сообщения в move'ах нужно отрисовывать на табло для сообщений, а не возвращать
+// тут важно не забыть сообщение в attakHandler
+
+
 export class Game {
     players; // массив игроков
     dice; // Dice
@@ -71,8 +75,7 @@ export class Game {
 
         this.gameDiv.addEventListener(
             'click',
-            () => this.move(event)
-
+            () => this.move(event),
         )
     }
 
@@ -107,15 +110,26 @@ export class Game {
         for (const player of this.players) {
             if (player.hasPawnOnPosition(newPos)) {
                 if (player === currentPlayer) {
-                    return "Ход невозможен. Пешка встает на вашу другую пешку"
+                    return {
+                        message: "Ход невозможен. Пешка встает на вашу другую пешку",
+                        standsOnOwnPawn: true
+                    }
                 }
                 Game.#movePawnToHome(player, currentPlayer, newPos);
                 Game.#movePawnElementToHome(
                     Game.getSlotByIndex(newPos),
                     player.home
                 );
-                break;
+                return {
+                    message: `пешка игрока с цветом ${player.color} была съедена`,
+                    standsOnOwnPawn: false
+                }
             }
+        }
+
+        return {
+            message: null,
+            standsOnOwnPawn: false
         }
     }
 
@@ -163,7 +177,9 @@ export class Game {
         );
         console.log(newPos);
 
-        this.#curPlayerAattackHandler(newPos);
+        const attackResult = this.#curPlayerAattackHandler(newPos);
+        if (attackResult.standsOnOwnPawn)
+            return attackResult.message;
 
 
         player.pawnsOnField.add(newPos);

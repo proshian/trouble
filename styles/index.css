@@ -1,80 +1,14 @@
-body {
-	margin: 0px;
-}
+.button {
+    display: block;
+    width: 115px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
 
-.game {
-	height: 100vh;
-}
-
-.field {
-	height: 65vmin;
-	width: 65vmin;
-	min-height: 300px;
-	min-width: 300px;
-	color: black;
-}
-
-.current-player-color-indicator {
-	width: 18vmin;
-	height: 18vmin;
-	background-color: black;
-	border-radius: 12%;
-}
-
-.slot, .centering-parent {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.slot {
-	height: 5.7vmin;
-	width: 5.7vmin;
-	border-radius: 50%;
-	border: 1px solid grey;
-	box-sizing: border-box;
-	opacity: 0.85;
-}
-
-.feildSlot {
-	position: absolute;
-}
-
-
-.activeSlot {
-	/*box-shadow: 0px 0px 10px 5px rgb(0 0 0 / 0.2);*/
-	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-	border-color: black;
-	cursor: pointer;
-	transition: 0.3s;
-}
-
-.activeSlot:hover {
-		opacity: 1
-}
-
-.dice {
-	width: 10vmin;
-	height: 10vmin;
-	background: no-repeat;
-	background-size: cover;
-}
-
-.home {
-	/*width: 10vmin;
-	height: 10vmin;
-	background-color: black;*/
-	margin: 0px 1vmin;
-	/*border: solid 0.5vmin;*/
-}
-
-.home-slot {
-	background-color: transparent;
-	border: none;
-}
-
-
-
-.pawn {
-	height: 4vh;
+    margin: 1vh;
 }
