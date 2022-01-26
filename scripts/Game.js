@@ -38,6 +38,10 @@ export class Game {
         );
     }
 
+    get currentPlayer() {
+        return this.players[this.curOrder];
+    }
+
     constructor(players, dice, colorIndicator) {
         this.players = players;
         this.curOrder = 0;
@@ -77,6 +81,24 @@ export class Game {
         Game.#movePawnElement(fieldSlot, lastEmptySlot);
     }
 
+
+    #curPlayerAattackHandler(newPos) {
+        const currentPlayer = this.currentPlayer;
+        for (const player of this.players) {
+            if (player.hasPawnOnPosition(newPos)) {
+                if (player === currentPlayer) {
+                    return "Ход невозможен. Пешка встает на вашу другую пешку"
+                }
+                Game.#movePawnToHome(player, currentPlayer, newPos);
+                Game.#movePawnElementToHome(
+                    Game.getSlotByIndex(newPos),
+                    player.home
+                );
+                break;
+            }
+        }
+    }
+
     move(event) {
        
         for (const player of this.players) {
@@ -95,8 +117,10 @@ export class Game {
     }
 
     moveFromHome(player) {
-        
-        if (player != this.players[this.curOrder]) // ! возможно стоит завернуть в get currentPlayer()
+
+        console.log(this.currentPlayer);
+
+        if (player != this.currentPlayer)
             return "you are not the curent player";
 
         if (player.homePawnsNum === 0) {
@@ -110,7 +134,7 @@ export class Game {
         }
 
 
-
+        console.log("cuc");
         console.log(this);
 
         const newPos = Game.#getPotentialNewPos(
@@ -118,21 +142,12 @@ export class Game {
             this.dice.num
         );
         console.log(newPos);
-        for (const playerInstance of this.players) { // ! унифицировать эту проверку ( завести методод attackCheck() )
-            if (playerInstance.hasPawnOnPosition(newPos)) {
-                if (playerInstance === player) {
-                    return "Ход невозможен. Пешка встает на вашу другую пешку"
-                }
 
-                Game.#movePawnToHome(playerInstance, player, newPos, event.target);
-                Game.#movePawnElementToHome(
-                    Game.getSlotByIndex(newPos),
-                    playerInstance.home
-                );
-            }
-        }
+        this.#curPlayerAattackHandler(newPos);
 
-        
+
+
+
         player.pawnsOnField.add(newPos);
         Game.#movePawnElementFromHomeToFeild(player, newPos);
         /*
@@ -169,7 +184,7 @@ export class Game {
         }
 
 
-        const currentPlayer = this.players[this.curOrder];
+        const currentPlayer = this.currentPlayer;
         console.log(currentPlayer);
         // если rightTurn = true, кликнутая пешка принадлежит текущему игроку
         const rightTurn = currentPlayer.hasPawnOnPosition(clickedSlotIndex);
@@ -185,18 +200,8 @@ export class Game {
 
         // ! перед проверкой ниже добавить проверку, не прошли ли круг пешкой
 
-        for (const player of this.players) {
-            if (player.hasPawnOnPosition(newPos)) {
-                if (player === currentPlayer) {
-                    return "Ход невозможен. Пешка встает на вашу другую пешку"
-                }
-                Game.#movePawnToHome(player, currentPlayer, newPos, event.target);
-                Game.#movePawnElementToHome(
-                    Game.getSlotByIndex(newPos),
-                    player.home
-                );
-            }
-        }
+
+        this.#curPlayerAattackHandler(newPos);
 
         currentPlayer.pawnsOnField.delete(clickedSlotIndex); // ! Эти две аперации можно объединить в одну
         currentPlayer.pawnsOnField.add(newPos);
