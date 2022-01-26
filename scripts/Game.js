@@ -81,6 +81,12 @@ export class Game {
         Game.#movePawnElement(fieldSlot, lastEmptySlot);
     }
 
+    // передача хода
+    makeNextPlayerCurrentPlayer() {
+        this.curOrder = (this.curOrder + 1) % 4;
+        this.dice.throwDice();
+        this.updateColorIndicator();
+    }
 
     #curPlayerAattackHandler(newPos) {
         const currentPlayer = this.currentPlayer;
@@ -117,9 +123,6 @@ export class Game {
     }
 
     moveFromHome(player) {
-
-        console.log(this.currentPlayer);
-
         if (player != this.currentPlayer)
             return "you are not the curent player";
 
@@ -133,10 +136,6 @@ export class Game {
             return "you've got a free pawn and the dice number is not 6. Choose another pawn."
         }
 
-
-        console.log("cuc");
-        console.log(this);
-
         const newPos = Game.#getPotentialNewPos(
             Game.#getPreviousPos(player.startPosition),
             this.dice.num
@@ -144,8 +143,6 @@ export class Game {
         console.log(newPos);
 
         this.#curPlayerAattackHandler(newPos);
-
-
 
 
         player.pawnsOnField.add(newPos);
@@ -156,12 +153,8 @@ export class Game {
         Game.getSlotByIndex(newPos).appendChild(pawnImg);
         */
 
-        
 
-        this.curOrder = (this.curOrder + 1) % 4;
-        this.dice.throwDice();
-        this.updateColorIndicator();
-        console.log(newPos);
+        this.makeNextPlayerCurrentPlayer();
     }
 
     moveFromField(event) {
@@ -196,8 +189,6 @@ export class Game {
 
         const newPos = Game.#getPotentialNewPos(clickedSlotIndex, this.dice.num);
 
-        console.log("newPos = " + newPos);
-
         // ! перед проверкой ниже добавить проверку, не прошли ли круг пешкой
 
 
@@ -208,9 +199,6 @@ export class Game {
 
         Game.#movePawnElement(clickedSlot, Game.getSlotByIndex(newPos));
 
-        this.curOrder = (this.curOrder + 1) % 4;
-        this.dice.throwDice();
-
-        this.updateColorIndicator()
+        this.makeNextPlayerCurrentPlayer();
     }
 }
