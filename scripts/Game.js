@@ -105,6 +105,13 @@ export class Game {
         }
     }
 
+
+    static #movePawnFromFToF(player, oldPos, newPos) {
+        currentPlayer.pawnsOnField.delete(clickedSlotIndex);
+        currentPlayer.pawnsOnField.add(newPos);
+    }
+
+
     move(event) {
        
         for (const player of this.players) {
@@ -157,9 +164,9 @@ export class Game {
         this.makeNextPlayerCurrentPlayer();
     }
 
+    // ! Возможно, лучше передавать не 
     moveFromField(event) {
-        // здесь обработчик EventListener'a
-
+        // ближайший родительский элемент (или сам элемент), явящийся слтоом поля
         const clickedSlot = event.target.closest(".feildSlot");
 
         // сравниваю с любой пустотой на всякий случай
@@ -170,18 +177,16 @@ export class Game {
         const clickedSlotIndex = Number(clickedSlot.dataset?.index); // ! Возможно, лучше parseInt
 
         // можно было бы поставить строгое сравнение, ведь ?. в случае неудачи возвращает undefined
-        // на всякий случай ешил сравнивать с любой пустотой
+        // на всякий случай решил сравнивать с любой пустотой
         if (clickedSlotIndex == undefined) {
-            // throw new Error("Something's wrong! A slot doesn't have an index!");
-            return console.log("Чтобы сделать ход необходимо кликнуть по фишке");
+            throw new Error("Something's wrong! A slot doesn't have an index!");
         }
 
 
         const currentPlayer = this.currentPlayer;
-        console.log(currentPlayer);
         // если rightTurn = true, кликнутая пешка принадлежит текущему игроку
         const rightTurn = currentPlayer.hasPawnOnPosition(clickedSlotIndex);
-        console.log("rightTurn = " + rightTurn);
+        
         if (!rightTurn) {
             return `Текущий игрок с цветом ${currentPlayer.color}.
                 Кликните по фишке этого цвета или пропустите ход`;
@@ -194,8 +199,7 @@ export class Game {
 
         this.#curPlayerAattackHandler(newPos);
 
-        currentPlayer.pawnsOnField.delete(clickedSlotIndex); // ! Эти две аперации можно объединить в одну
-        currentPlayer.pawnsOnField.add(newPos);
+        Game.#movePawnFromFToF(currentPlayer, clickedSlotIndex, newPos);
 
         Game.#movePawnElement(clickedSlot, Game.getSlotByIndex(newPos));
 
