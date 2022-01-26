@@ -67,6 +67,8 @@ export class Game {
 
         this.gameDiv = gameDiv;
 
+        //console.log(gameDiv);
+
         this.gameDiv.addEventListener(
             'click',
             () => this.move(event)
