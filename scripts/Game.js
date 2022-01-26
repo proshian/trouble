@@ -178,10 +178,10 @@ export class Game {
         console.log(newPos);
 
         const attackResult = this.#curPlayerAattackHandler(newPos);
-        if (attackResult.standsOnOwnPawn)
+        if (attackResult.standsOnOwnPawn) {
             return attackResult.message;
-
-
+        }
+        
         player.pawnsOnField.add(newPos);
         Game.#movePawnElementFromHomeToFeild(player, newPos);
         /*
@@ -227,7 +227,11 @@ export class Game {
         // ! перед проверкой ниже добавить проверку, не прошли ли круг пешкой
 
 
-        this.#curPlayerAattackHandler(newPos);
+        const attackResult = this.#curPlayerAattackHandler(newPos);
+        if (attackResult.standsOnOwnPawn) {
+            return attackResult.message;
+        }
+        
 
         Game.#movePawnFromFToF(currentPlayer, clickedSlotIndex, newPos);
 
