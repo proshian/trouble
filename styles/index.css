@@ -1,7 +1,7 @@
 .button {
+    width: 20vw;
+    min-height: 4vh;
     display: block;
-    width: 115px;
-    height: 25px;
     background: red;
     padding: 10px;
     text-align: center;
@@ -9,6 +9,5 @@
     color: white;
     font-weight: bold;
     line-height: 25px;
-
     margin: 1vh;
 }
