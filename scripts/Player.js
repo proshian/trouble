@@ -7,9 +7,28 @@ export class Player {
 	);
 
 	static startPositions = new Set(
-		[24, 3, 10, 17]	// ! возможно лучше не захардкодить, а сгенерировать
+		[24, 3, 10, 17]	// ! возможно лучше не хардкодить, а генерировать
 						// это же просто (prevEl+7)%28
 	);
+
+	/** @type { number } */
+	startPosition;
+
+	/** @type { string } */
+	color;
+
+	/** @type { number } */
+	order;
+
+	/** @type {HTMLElement} */
+	home;
+
+	/** @type {Set<number>} */
+	blockedFinishSlots = new Set(); // занятые слоты финиша // множество number 
+	pawnsOnField = new Set();	// номера слотов поля, содержащих пешки данного игрока // множество number
+	get homePawnsNum() {  // число пешек в доме // number
+		return Player.allPawns - this.blockedFinishSlots.size - this.pawnsOnField.size;
+	}
 
 	constructor(startPosition, color, order, home) {
 		if (!Player.startPositions.has(startPosition))
@@ -28,18 +47,8 @@ export class Player {
 
     }
 
-	startPosition;
-	color;
-	order;
-	home;
 
-	blockedFinishSlots = new Set(); // занятые слоты финиша // множество number 
-	pawnsOnField = new Set();	// номера слотов поля, содержащих пешки данного игрока // множество number
-	get homePawnsNum() {  // число пешек в доме // number
-		return Player.allPawns - this.blockedFinishSlots.size - this.pawnsOnField.size;
-	}
-
-	hasPawnOnPosition(pos) {	// если нужна тотолько ради абстракции
+	hasPawnOnPosition(pos) {	// если нужна то только ради абстракции
 		return this.pawnsOnField.has(pos);
 	}
 }

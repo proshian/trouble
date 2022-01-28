@@ -13,7 +13,6 @@ function shuffleArray(array) {
 }
 */
 
-//console.log(slotArray);
 
 boardCreation();
 const players = [];
@@ -27,7 +26,7 @@ const startPositions = Array.from(Player.startPositions)
 const homes = document.querySelectorAll('.home');
 
 
-// цикл ниже создает имитацию состояния игры
+// цикл ниже - временный способ инициализирвать игру
 for (let i = 0; i < 4; i++) {
 	const color = colors[i];	// ! изменить
 	const startPosition = startPositions[i]; // ! изменить
@@ -47,7 +46,3 @@ const colorIndicator = document.querySelector('.current-player-color-indicator')
 const gameDiv = document.querySelector('.game');
 
 new Game(players, dice, colorIndicator, gameDiv);
-
-
-
-//const field = document.querySelector('.field');

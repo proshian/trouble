@@ -10,6 +10,42 @@ export class Game {
 
     static #slotsNum = 28; // число слотов на доске
 
+    get currentPlayer() {
+        return this.players[this.curOrder];
+    }
+
+    constructor(players, dice, colorIndicator, gameDiv) {
+        this.players = players;
+        this.curOrder = 0;
+        this.dice = dice;
+
+        this.colorIndicator = colorIndicator;
+        this.updateColorIndicator();
+
+        this.moveFromHome = this.moveFromHome.bind(this); // ! не уверен, что все еще нужно
+
+
+        for (const player of this.players) {
+            Game.getSlotByIndex(player.startPosition).style.backgroundColor = player.color;
+
+            const allPawns = player.home.querySelectorAll('.pawn');
+            for (const pawn of allPawns) {
+                pawn.style.fill = player.color;
+            }
+        }
+
+
+
+        this.gameDiv = gameDiv;
+
+        //console.log(gameDiv);
+
+        this.gameDiv.addEventListener(
+            'click',
+            () => this.move(event),
+        )
+    }
+
     static getSlotByIndex(index) {
         //return document.querySelector(`div.field>.feildSlot[data-index = "${index}"]`);
         return document.querySelector(`.feildSlot[data-index = "${index}"]`);
@@ -43,41 +79,9 @@ export class Game {
         );
     }
 
-    get currentPlayer() {
-        return this.players[this.curOrder];
-    }
+    
 
-    constructor(players, dice, colorIndicator, gameDiv) {
-        this.players = players;
-        this.curOrder = 0;
-        this.dice = dice;
-        
-        this.colorIndicator = colorIndicator;
-        this.updateColorIndicator();
-
-        this.moveFromHome = this.moveFromHome.bind(this); // ! не уверен, что все еще нужно
-
-
-        for (const player of this.players) {
-            Game.getSlotByIndex(player.startPosition).style.backgroundColor = player.color;
-
-            const allPawns = player.home.querySelectorAll('.pawn');
-            for (const pawn of allPawns) {
-                pawn.style.fill = player.color;
-            }
-        }
-
-
-
-        this.gameDiv = gameDiv;
-
-        //console.log(gameDiv);
-
-        this.gameDiv.addEventListener(
-            'click',
-            () => this.move(event),
-        )
-    }
+    
 
     static #movePawnToHome(victimPlayer, attackerPlayer, curPos) { // ! Возмжно, лучше сделать методом Player'а
         victimPlayer.pawnsOnField.delete(curPos);
