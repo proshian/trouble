@@ -3,13 +3,22 @@
 
 
 export class Game {
-    players; // массив игроков
-    dice; // Dice
+    /** @type {Array<Player>} */
+    players;
+
+    /** @type {Dice} */
+    dice;
+
+    /** @type {number} */
     curOrder; // нужно хранить, потому что если игрок ткнул не туда, кубик не бросаетс€ снова
+
+    /** @type {HTMLElement} */
     gameDiv;
 
+    /** @type {number} */
     static #slotsNum = 28; // число слотов на доске
 
+    /** @type {Player} */
     get currentPlayer() {
         return this.players[this.curOrder];
     }
@@ -25,26 +34,19 @@ export class Game {
         this.moveFromHome = this.moveFromHome.bind(this); // ! не уверен, что все еще нужно
 
 
+        // окрашиваем стартовые позиции пользователей в их цвета
         for (const player of this.players) {
             Game.getSlotByIndex(player.startPosition).style.backgroundColor = player.color;
-
-            const allPawns = player.home.querySelectorAll('.pawn');
-            for (const pawn of allPawns) {
-                pawn.style.fill = player.color;
-            }
         }
 
-
-
         this.gameDiv = gameDiv;
-
-        //console.log(gameDiv);
 
         this.gameDiv.addEventListener(
             'click',
             () => this.move(event),
         )
     }
+
 
     static getSlotByIndex(index) {
         //return document.querySelector(`div.field>.feildSlot[data-index = "${index}"]`);
@@ -63,7 +65,7 @@ export class Game {
         this.colorIndicator.style.backgroundColor = this.players[this.curOrder].color;
     }
 
-    static #movePawnElement(source, dest) {
+    static #movePawnElement(source, dest) { // ! скорее всего, нужно изменить
         const pawnElem = source.firstElementChild;
         if (!pawnElem.classList.contains('pawn')) {
             throw new Error("Something's wrong: an attempt to move a non pawn object!");
@@ -72,7 +74,7 @@ export class Game {
         dest.appendChild(source.removeChild(pawnElem));
     }
 
-    static #movePawnElementFromHomeToFeild(player, index) {
+    static #movePawnElementFromHomeToFeild(player, index) { // ! возможо, нужно изменить
         Game.#movePawnElement(
             player.home.querySelector('.pawn').parentElement,
             Game.getSlotByIndex(index)
@@ -83,13 +85,16 @@ export class Game {
 
     
 
-    static #movePawnToHome(victimPlayer, attackerPlayer, curPos) { // ! ¬озмжно, лучше сделать методом Player'а
-        victimPlayer.pawnsOnField.delete(curPos);
-        //curPosSlot.style.backgroundColor = attackerPlayer.color;
+    static #movePawnToHome(victimPlayer, curPos) { // ! ¬озмжно, лучше сделать методом Player'а
+        //victimPlayer.pawnsOnField.delete(curPos);
+        const pawnObj = victimPlayer.getPawnWithPos(curPos);
+        pawnObj.fieldPosition = null;
+        Game.#movePawnElementToHome(pawnObj.pawn);
+        pawnObj.pawn;
     }
 
 
-    static #movePawnElementToHome(fieldSlot, home) {
+    static #movePawnElementToHome(fieldSlot, home) { // ! возможно, нужно изменить
         const homeSlots = home.children;
         let lastEmptySlot;
         for (const slot of homeSlots) {
@@ -109,7 +114,7 @@ export class Game {
         this.updateColorIndicator();
     }
 
-    #curPlayerAattackHandler(newPos) {
+    #attackHandler(newPos) {
         const currentPlayer = this.currentPlayer;
         for (const player of this.players) {
             if (player.hasPawnOnPosition(newPos)) {
@@ -171,7 +176,7 @@ export class Game {
 
         // ! 4 - это сколько всего пешек у игрока.
         // ¬озможн, следует импортировтаь класс Player и использовать константу Player.allPawns
-        if (player.homePawnsNum != 4 && this.dice.num != 6) { 
+        if (player.allPawnsAtHome() && this.dice.num != 6) { 
             return "you've got a free pawn and the dice number is not 6. Choose another pawn."
         }
 
@@ -179,9 +184,9 @@ export class Game {
             Game.#getPreviousPos(player.startPosition),
             this.dice.num
         );
-        console.log(newPos);
+        //console.log(newPos);
 
-        const attackResult = this.#curPlayerAattackHandler(newPos);
+        const attackResult = this.#attackHandler(newPos);
         if (attackResult.standsOnOwnPawn) {
             return attackResult.message;
         }
@@ -231,7 +236,7 @@ export class Game {
         // ! перед проверкой ниже добавить проверку, не прошли ли круг пешкой
 
 
-        const attackResult = this.#curPlayerAattackHandler(newPos);
+        const attackResult = this.#attackHandler(newPos);
         if (attackResult.standsOnOwnPawn) {
             return attackResult.message;
         }

@@ -23,23 +23,28 @@ export class Player {
 	/** @type {HTMLElement} */
 	home;
 
-	/** @type {Set<number>} */
-	blockedFinishSlots = new Set(); // занятые слоты финиша // множество number 
-	pawnsOnField = new Set();	// номера слотов поля, содержащих пешки данного игрока // множество number
-	get homePawnsNum() {  // число пешек в доме // number
-		return Player.allPawns - this.blockedFinishSlots.size - this.pawnsOnField.size;
-	}
+	/** @type {Array<Pawn>} */
+	pawns;
 
-	constructor(startPosition, color, order, home) {
+	constructor(startPosition, color, order, home, pawns) {
 		if (!Player.startPositions.has(startPosition))
 			throw new Error(`Incorrect start position value: "${startPosition}"`);
 
+		/*
 		if (!Player.colors.has(color))
 			throw new Error(`Incorrect color value: "${color}"`);
+		*/
 
 		this.startPosition = startPosition;
 		this.color = color;
 		this.order = order;
+
+		this.pawns = pawns;
+		for (const pawn of this.pawns) {
+			console.log(pawn.style);
+			pawn.pawn.style.fill = this.color;
+        }
+
 		this.home = home;
 		this.home.style.backgroundColor = this.color;
 
@@ -47,8 +52,30 @@ export class Player {
 
     }
 
+	allPawnsAtHome() {
+		for (const pawnObj of pawns) {
+			if (!pawnObj.atHome) {
+				return false;
+            }
+		}
+		return true;
+    }
 
 	hasPawnOnPosition(pos) {	// если нужна то только ради абстракции
-		return this.pawnsOnField.has(pos);
+		//return this.pawns.feildPositionhas(pos);
+		for (const pawn of this.pawns) {
+			if (pawn.fieldPosition === pos)
+				return true;
+		}
+		return false;
 	}
+
+	// аналогична hasPawnOnPosition
+	getPawnWithPos(pos) {
+		for (const pawn of this.pawns) {
+			if (pawn.fieldPosition === pos)
+				return pawn;
+		}
+		return null;
+    }
 }

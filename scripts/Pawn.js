@@ -19,4 +19,8 @@ export class Pawn {
     get atHome() {
         return finishPosition === null && fieldPosition === null;
     }
+
+    constructor(pawn) {
+        this.pawn = pawn;
+    }
 }
