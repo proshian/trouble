@@ -78,5 +78,6 @@ body {
 
 
 .pawn {
-	height: 4vh;
+	height: 4vmin;
+	width: 2.5vmin;
 }
