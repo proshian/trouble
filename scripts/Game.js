@@ -3,13 +3,22 @@
 
 
 export class Game {
-    players; // массив игроков
-    dice; // Dice
+    /** @type {Array<Player>} */
+    players;
+
+    /** @type {Dice} */
+    dice;
+
+    /** @type {number} */
     curOrder; // нужно хранить, потому что если игрок ткнул не туда, кубик не бросаетс€ снова
+
+    /** @type {HTMLElement} */
     gameDiv;
 
+    /** @type {number} */
     static #slotsNum = 28; // число слотов на доске
 
+    /** @type {number} */
     get currentPlayer() {
         return this.players[this.curOrder];
     }
@@ -170,7 +179,7 @@ export class Game {
         }
 
         // ! 4 - это сколько всего пешек у игрока.
-        // ¬озможн, следует импортировтаь класс Player и использовать константу Player.allPawns
+        // ¬озможно, следует импортировтаь класс Player и использовать константу Player.allPawns
         if (player.homePawnsNum != 4 && this.dice.num != 6) { 
             return "you've got a free pawn and the dice number is not 6. Choose another pawn."
         }
