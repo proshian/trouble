@@ -1,5 +1,5 @@
-// !!!!!!! сообщения в move'ах нужно отрисовывать на табло для сообщений, а не возвращать
-// тут важно не забыть сообщение в attakHandler
+// !!!!!!! СЃРѕРѕР±С‰РµРЅРёСЏ РІ move'Р°С… РЅСѓР¶РЅРѕ РѕС‚СЂРёСЃРѕРІС‹РІР°С‚СЊ РЅР° С‚Р°Р±Р»Рѕ РґР»СЏ СЃРѕРѕР±С‰РµРЅРёР№, Р° РЅРµ РІРѕР·РІСЂР°С‰Р°С‚СЊ
+// С‚СѓС‚ РІР°Р¶РЅРѕ РЅРµ Р·Р°Р±С‹С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ РІ attakHandler
 
 
 export class Game {
@@ -10,13 +10,13 @@ export class Game {
     dice;
 
     /** @type {number} */
-    curOrder; // нужно хранить, потому что если игрок ткнул не туда, кубик не бросается снова
+    curOrder; // РЅСѓР¶РЅРѕ С…СЂР°РЅРёС‚СЊ, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РµСЃР»Рё РёРіСЂРѕРє С‚РєРЅСѓР» РЅРµ С‚СѓРґР°, РєСѓР±РёРє РЅРµ Р±СЂРѕСЃР°РµС‚СЃСЏ СЃРЅРѕРІР°
 
     /** @type {HTMLElement} */
     gameDiv;
 
     /** @type {number} */
-    static #slotsNum = 28; // число слотов на доске
+    static #slotsNum = 28; // С‡РёСЃР»Рѕ СЃР»РѕС‚РѕРІ РЅР° РґРѕСЃРєРµ
 
     /** @type {number} */
     get currentPlayer() {
@@ -31,7 +31,7 @@ export class Game {
         this.colorIndicator = colorIndicator;
         this.updateColorIndicator();
 
-        this.moveFromHome = this.moveFromHome.bind(this); // ! не уверен, что все еще нужно
+        this.moveFromHome = this.moveFromHome.bind(this); // ! РЅРµ СѓРІРµСЂРµРЅ, С‡С‚Рѕ РІСЃРµ РµС‰Рµ РЅСѓР¶РЅРѕ
 
 
         for (const player of this.players) {
@@ -92,7 +92,7 @@ export class Game {
 
     
 
-    static #movePawnToHome(victimPlayer, attackerPlayer, curPos) { // ! Возмжно, лучше сделать методом Player'а
+    static #movePawnToHome(victimPlayer, attackerPlayer, curPos) { // ! Р’РѕР·РјР¶РЅРѕ, Р»СѓС‡С€Рµ СЃРґРµР»Р°С‚СЊ РјРµС‚РѕРґРѕРј Player'Р°
         victimPlayer.pawnsOnField.delete(curPos);
         //curPosSlot.style.backgroundColor = attackerPlayer.color;
     }
@@ -111,7 +111,7 @@ export class Game {
         Game.#movePawnElement(fieldSlot, lastEmptySlot);
     }
 
-    // передача хода
+    // РїРµСЂРµРґР°С‡Р° С…РѕРґР°
     makeNextPlayerCurrentPlayer() {
         this.curOrder = (this.curOrder + 1) % 4;
         this.dice.throwDice();
@@ -124,7 +124,7 @@ export class Game {
             if (player.hasPawnOnPosition(newPos)) {
                 if (player === currentPlayer) {
                     return {
-                        message: "Ход невозможен. Пешка встает на вашу другую пешку",
+                        message: "РҐРѕРґ РЅРµРІРѕР·РјРѕР¶РµРЅ. РџРµС€РєР° РІСЃС‚Р°РµС‚ РЅР° РІР°С€Сѓ РґСЂСѓРіСѓСЋ РїРµС€РєСѓ",
                         standsOnOwnPawn: true
                     }
                 }
@@ -134,7 +134,7 @@ export class Game {
                     player.home
                 );
                 return {
-                    message: `пешка игрока с цветом ${player.color} была съедена`,
+                    message: `РїРµС€РєР° РёРіСЂРѕРєР° СЃ С†РІРµС‚РѕРј ${player.color} Р±С‹Р»Р° СЃСЉРµРґРµРЅР°`,
                     standsOnOwnPawn: false
                 }
             }
@@ -156,7 +156,7 @@ export class Game {
     move(event) {
        
         for (const player of this.players) {
-            // если клкнули по дому или дочернему элементу дома игрока player
+            // РµСЃР»Рё РєР»РєРЅСѓР»Рё РїРѕ РґРѕРјСѓ РёР»Рё РґРѕС‡РµСЂРЅРµРјСѓ СЌР»РµРјРµРЅС‚Сѓ РґРѕРјР° РёРіСЂРѕРєР° player
             if (player.home.contains(event.target)) {
                 this.moveFromHome(player);
                 return;
@@ -178,8 +178,8 @@ export class Game {
             return "you've got no pawns at home"
         }
 
-        // ! 4 - это сколько всего пешек у игрока.
-        // Возможно, следует импортировтаь класс Player и использовать константу Player.allPawns
+        // ! 4 - СЌС‚Рѕ СЃРєРѕР»СЊРєРѕ РІСЃРµРіРѕ РїРµС€РµРє Сѓ РёРіСЂРѕРєР°.
+        // Р’РѕР·РјРѕР¶РЅРѕ, СЃР»РµРґСѓРµС‚ РёРјРїРѕСЂС‚РёСЂРѕРІС‚Р°СЊ РєР»Р°СЃСЃ Player Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РєРѕРЅСЃС‚Р°РЅС‚Сѓ Player.allPawns
         if (player.homePawnsNum != 4 && this.dice.num != 6) { 
             return "you've got a free pawn and the dice number is not 6. Choose another pawn."
         }
@@ -207,37 +207,37 @@ export class Game {
         this.makeNextPlayerCurrentPlayer();
     }
 
-    // ! Возможно, лучше передавать event.target
+    // ! Р’РѕР·РјРѕР¶РЅРѕ, Р»СѓС‡С€Рµ РїРµСЂРµРґР°РІР°С‚СЊ event.target
     moveFromField(event) {
-        // ближайший родительский элемент (или сам элемент), явящийся слтоом поля
+        // Р±Р»РёР¶Р°Р№С€РёР№ СЂРѕРґРёС‚РµР»СЊСЃРєРёР№ СЌР»РµРјРµРЅС‚ (РёР»Рё СЃР°Рј СЌР»РµРјРµРЅС‚), СЏРІСЏС‰РёР№СЃСЏ СЃР»С‚РѕРѕРј РїРѕР»СЏ
         const clickedSlot = event.target.closest(".feildSlot");
 
-        // сравниваю с любой пустотой на всякий случай
+        // СЃСЂР°РІРЅРёРІР°СЋ СЃ Р»СЋР±РѕР№ РїСѓСЃС‚РѕС‚РѕР№ РЅР° РІСЃСЏРєРёР№ СЃР»СѓС‡Р°Р№
         if (clickedSlot == null) {
             return "You clicked an empty area of the field!";
         }
 
-        const clickedSlotIndex = Number(clickedSlot.dataset?.index); // ! Возможно, лучше parseInt
+        const clickedSlotIndex = Number(clickedSlot.dataset?.index); // ! Р’РѕР·РјРѕР¶РЅРѕ, Р»СѓС‡С€Рµ parseInt
 
-        // можно было бы поставить строгое сравнение, ведь ?. в случае неудачи возвращает undefined
-        // на всякий случай решил сравнивать с любой пустотой
+        // РјРѕР¶РЅРѕ Р±С‹Р»Рѕ Р±С‹ РїРѕСЃС‚Р°РІРёС‚СЊ СЃС‚СЂРѕРіРѕРµ СЃСЂР°РІРЅРµРЅРёРµ, РІРµРґСЊ ?. РІ СЃР»СѓС‡Р°Рµ РЅРµСѓРґР°С‡Рё РІРѕР·РІСЂР°С‰Р°РµС‚ undefined
+        // РЅР° РІСЃСЏРєРёР№ СЃР»СѓС‡Р°Р№ СЂРµС€РёР» СЃСЂР°РІРЅРёРІР°С‚СЊ СЃ Р»СЋР±РѕР№ РїСѓСЃС‚РѕС‚РѕР№
         if (clickedSlotIndex == undefined) {
             throw new Error("Something's wrong! A slot doesn't have an index!");
         }
 
 
         const currentPlayer = this.currentPlayer;
-        // если rightTurn = true, кликнутая пешка принадлежит текущему игроку
+        // РµСЃР»Рё rightTurn = true, РєР»РёРєРЅСѓС‚Р°СЏ РїРµС€РєР° РїСЂРёРЅР°РґР»РµР¶РёС‚ С‚РµРєСѓС‰РµРјСѓ РёРіСЂРѕРєСѓ
         const rightTurn = currentPlayer.hasPawnOnPosition(clickedSlotIndex);
         
         if (!rightTurn) {
-            return `Текущий игрок с цветом ${currentPlayer.color}.
-                Кликните по фишке этого цвета или пропустите ход`;
+            return `РўРµРєСѓС‰РёР№ РёРіСЂРѕРє СЃ С†РІРµС‚РѕРј ${currentPlayer.color}.
+                РљР»РёРєРЅРёС‚Рµ РїРѕ С„РёС€РєРµ СЌС‚РѕРіРѕ С†РІРµС‚Р° РёР»Рё РїСЂРѕРїСѓСЃС‚РёС‚Рµ С…РѕРґ`;
         }
 
         const newPos = Game.#getPotentialNewPos(clickedSlotIndex, this.dice.num);
 
-        // ! перед проверкой ниже добавить проверку, не прошли ли круг пешкой
+        // ! РїРµСЂРµРґ РїСЂРѕРІРµСЂРєРѕР№ РЅРёР¶Рµ РґРѕР±Р°РІРёС‚СЊ РїСЂРѕРІРµСЂРєСѓ, РЅРµ РїСЂРѕС€Р»Рё Р»Рё РєСЂСѓРі РїРµС€РєРѕР№
 
 
         const attackResult = this.#curPlayerAattackHandler(newPos);
