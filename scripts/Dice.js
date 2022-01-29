@@ -11,7 +11,7 @@ export class Dice {
 	/** @type {string}  **/
 	static diceImgDirectory = './img/diceSeparate/';
 
-	/** массив строк **/
+	/** РјР°СЃСЃРёРІ СЃС‚СЂРѕРє **/
 	static diceImgNames = ['1.svg', '2.svg', '3.svg', '4.svg', '5.svg', '6.svg'];
 
 	throwDice() {

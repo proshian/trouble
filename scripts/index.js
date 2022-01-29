@@ -26,10 +26,10 @@ const startPositions = Array.from(Player.startPositions)
 const homes = document.querySelectorAll('.home');
 
 
-// цикл ниже - временный способ инициализирвать игру
+// С†РёРєР» РЅРёР¶Рµ - РІСЂРµРјРµРЅРЅС‹Р№ СЃРїРѕСЃРѕР± РёРЅРёС†РёР°Р»РёР·РёСЂРІР°С‚СЊ РёРіСЂСѓ
 for (let i = 0; i < 4; i++) {
-	const color = colors[i];	// ! изменить
-	const startPosition = startPositions[i]; // ! изменить
+	const color = colors[i];	// ! РёР·РјРµРЅРёС‚СЊ
+	const startPosition = startPositions[i]; // ! РёР·РјРµРЅРёС‚СЊ
 	const player = new Player(startPosition, color, i, homes[i]);
 	/*player.pawnsOnField.add(startPosition);
 	const startSlot = Game.getSlotByIndex(startPosition);
