@@ -11,7 +11,7 @@ export function boardCreation(players) {
 
 	const slotsNum = 28; // число слотов
 
-	const offset = 0;	// начальный угол
+	const offset = -Math.PI / slotsNum * 2 -0.1122 + Math.PI/4;	// начальный угол
 
 
 

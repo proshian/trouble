@@ -3,12 +3,12 @@ body {
 }
 
 .game {
-	height: 90vh;
+	height: 92vh;
 }
 
 .field {
-	height: 65vmin;
-	width: 65vmin;
+	height: 75.5vmin;
+	width: 75.5vmin;
 	min-height: 300px;
 	min-width: 300px;
 	color: black;
@@ -17,7 +17,6 @@ body {
 .current-player-color-indicator {
 	width: 10.3vmin;
 	height: 10.3vmin;
-	background-color: black;
 	border-radius: 12%;
 }
 
