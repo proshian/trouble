@@ -14,6 +14,12 @@ export class Player {
 	/** @type { number } */
 	startPosition;
 
+	/** @type { number } */
+	get endPosition() {
+		const slotsNum = 28; // число слотов поля // ! возможно, стоит импортировать Game и оттуда slotsNum
+		return (this.startPosition + slotsNum - 1) % slotsNum;
+    }
+
 	/** @type { string } */
 	color;
 
@@ -23,6 +29,9 @@ export class Player {
 	/** @type {HTMLElement} */
 	home;
 
+	/** @type {HTMLElement} */
+	finish;
+
 	/** @type {Set<number>} */
 	blockedFinishSlots = new Set(); // занятые слоты финиша // множество number 
 	pawnsOnField = new Set();	// номера слотов поля, содержащих пешки данного игрока // множество number
@@ -30,7 +39,7 @@ export class Player {
 		return Player.allPawns - this.blockedFinishSlots.size - this.pawnsOnField.size;
 	}
 
-	constructor(startPosition, color, order, home) {
+	constructor(startPosition, color, order, home, finish) {
 		if (!Player.startPositions.has(startPosition))
 			throw new Error(`Incorrect start position value: "${startPosition}"`);
 

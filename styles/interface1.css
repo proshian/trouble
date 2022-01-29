@@ -3,7 +3,7 @@ body {
 }
 
 .game {
-	height: 100vh;
+	height: 90vh;
 }
 
 .field {
@@ -15,8 +15,8 @@ body {
 }
 
 .current-player-color-indicator {
-	width: 18vmin;
-	height: 18vmin;
+	width: 10.3vmin;
+	height: 10.3vmin;
 	background-color: black;
 	border-radius: 12%;
 }
@@ -56,8 +56,8 @@ body {
 }
 
 .dice {
-	width: 10vmin;
-	height: 10vmin;
+	width: 6.5vmin;
+	height: 6.5vmin;
 	background: no-repeat;
 	background-size: cover;
 }
@@ -75,9 +75,25 @@ body {
 	border: none;
 }
 
+.finish {
+	background-color: transparent;
+	position: absolute;
+}
 
+.finish-slot {
+	margin: 0.4vmin;
+}
 
 .pawn {
 	height: 4vmin;
 	width: 2.5vmin;
+}
+
+
+.non-board-elements > div {
+	display: inline-block;
+}
+
+.skip-move {
+	margin-left: auto;
 }

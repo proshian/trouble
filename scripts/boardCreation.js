@@ -1,70 +1,88 @@
-export function boardCreation() {
+export function boardCreation(players) {
 	//const slotArray = [];
 
 	const field = document.querySelector('.field');
-	const feildRect = field.getBoundingClientRect();
-	const feildX = feildRect.x;
-	const feildY = feildRect.y;
 
 	const fragment = document.createDocumentFragment();
 
+	const radius = 35; //halfFieldHeight - halfFieldSlotHeight;
 
-
-	
-
-	// получить высоту родительского div'а (те поля)
-	const halfFieldHeight = getHalfHeight(field);
-
-	// чтобы получить высоту слота
-	// создадим и удалим один элемент
-	const slot = document.createElement('button');
-	slot.classList.add('slot'); // ! возможно, лучше className
-	field.appendChild(slot);
-
-	const halfFieldSlotHeight = getHalfHeight(slot);
-
-	field.removeChild(slot);
-
-
-	const radius = halfFieldHeight - halfFieldSlotHeight;
+	const finishRadius = 19.5;//halfFieldHeight + 2 * halfFieldSlotHeight;
 
 	const slotsNum = 28; // число слотов
 
-	const offset = 0;	// начальный угол для первогос слота
+	const offset = 0;	// начальный угол
+
+
 
 	for (let i = 0; i < slotsNum; i++) {
-
 		// угол
 		// отрицателен, чтобы слоты расположились "по часовой стрелке"
 		const theta = -2 * Math.PI * i / slotsNum + offset;
 
-		const slot = document.createElement('button');
-		slot.type = "button";
-		slot.classList.add('feildSlot'); // ! возможно, лучше className
-		slot.classList.add('slot');
-		slot.dataset.index = i;	// добавляет атрибут data-index, i приводится к строке
+		console.log(`i=${i}, thta = ${theta}`);
+		
+		const slot = createFieldSlot(
+			i,
+			radius + 'vmin',
+			theta,
+		);
 
-		//slot.innerText = i;	// ! убрать
-
-		const x = Math.round(radius * Math.cos(theta)) + feildX;
-		const y = Math.round(radius * Math.sin(theta)) - feildY;
-
-
-		slot.style.top = (radius - y) + 'px';
-		slot.style.left = (radius + x) + 'px';
 
 		fragment.appendChild(slot);
 		//slotArray.push(slot);
 	}
 
+
+	// словарь хранит конечные позиции игроков (ключ) и цвета игроков (значение)
+	const endPositions = new Map();
+	for (const player of players) {
+		endPositions.set(player.endPosition, player.color);
+	}
+
+	
+	for (const [endPos, color] of endPositions) {
+		const theta = -2 * Math.PI * endPos / slotsNum + offset;
+
+		console.log(endPos);
+
+		const finish = document.createElement('div');
+		finish.classList.add('finish');
+
+		for (let i = 0; i < 4; i++) {
+			const finishSlot = document.createElement('div');
+			finishSlot.classList.add('slot');
+			finishSlot.classList.add('finish-slot');
+			finishSlot.style.backgroundColor = color;
+			finishSlot.style.transform = `rotate(${theta-Math.PI/2}rad)`;
+			finishSlot.dataset.index = i;
+
+
+			finish.appendChild(finishSlot);
+        }
+
+		finish.style.transform = `rotate(${-theta}rad) translate(${finishRadius + 'vmin'}) rotate(${90}deg)`;
+
+		for (const player of players) {
+			if (player.color === color) {
+				player.finish = finish;
+				break;
+			}
+		}
+		
+		fragment.appendChild(finish);
+    }
+	
 	field.appendChild(fragment);
 }
 
-
-function getHalfHeight(element) {
-	return Math.round(
-		parseInt(
-			window.getComputedStyle(element).height
-		) / 2
-	);
+function createFieldSlot(index, radius, theta) {
+	const slot = document.createElement('button');
+	slot.type = "button";
+	slot.classList.add('feildSlot'); // ! возможно, лучше className
+	slot.classList.add('slot');
+	slot.dataset.index = index;	// добавляет атрибут data-index, i приводится к строке
+	//slot.innerText = index;
+	slot.style.transform = `rotate(${-theta}rad) translate(${radius}) rotate(${theta}rad)`;
+	return slot;
 }

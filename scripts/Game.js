@@ -53,6 +53,11 @@ export class Game {
             'click',
             () => this.move(event),
         )
+
+        document.querySelector('.skip-move').addEventListener(
+            'click',
+            () => this.#makeNextPlayerCurrentPlayer(),
+        );
     }
 
     static getSlotByIndex(index) {
@@ -73,12 +78,21 @@ export class Game {
     }
 
     static #movePawnElement(source, dest) {
+        console.log("dest"+dest);
         const pawnElem = source.firstElementChild;
-        if (!pawnElem.classList.contains('pawn')) {
-            throw new Error("Something's wrong: an attempt to move a non pawn object!");
+
+        if (pawnElem == null) {
+            throw new Error("Something's wrong! A child was expected!");
         }
 
-        dest.appendChild(source.removeChild(pawnElem));
+        if (!pawnElem.classList.contains('pawn')) {
+            throw new Error("Something's wrong: an attempt to move a non-pawn object!");
+        }
+
+        //dest.appendChild(source.removeChild(pawnElem));
+
+        // appendChild перенесет элемент в dest, убрав его из исходного места в DOM
+        dest.appendChild(pawnElem); 
     }
 
     static #movePawnElementFromHomeToFeild(player, index) {
@@ -92,7 +106,7 @@ export class Game {
 
     
 
-    static #movePawnToHome(victimPlayer, attackerPlayer, curPos) { // ! Возмжно, лучше сделать методом Player'а
+    static #movePawnToHome(victimPlayer, curPos) { // ! Возмжно, лучше сделать методом Player'а
         victimPlayer.pawnsOnField.delete(curPos);
         //curPosSlot.style.backgroundColor = attackerPlayer.color;
     }
@@ -112,10 +126,15 @@ export class Game {
     }
 
     // передача хода
-    makeNextPlayerCurrentPlayer() {
+    #makeNextPlayerCurrentPlayer() {
         this.curOrder = (this.curOrder + 1) % 4;
         this.dice.throwDice();
         this.updateColorIndicator();
+
+        console.log("состояние игры:");
+        for (const player of this.players) {
+            console.log(player.color, player.pawnsOnField, player.blockedFinishSlots);
+        }
     }
 
     #curPlayerAattackHandler(newPos) {
@@ -128,7 +147,7 @@ export class Game {
                         standsOnOwnPawn: true
                     }
                 }
-                Game.#movePawnToHome(player, currentPlayer, newPos);
+                Game.#movePawnToHome(player, newPos);
                 Game.#movePawnElementToHome(
                     Game.getSlotByIndex(newPos),
                     player.home
@@ -154,7 +173,12 @@ export class Game {
 
 
     move(event) {
-       
+        console.log("cucucuc");
+        if (document.querySelector('.skip-move').contains(event.target)) {
+            console.log("cu");
+            return this.#makeNextPlayerCurrentPlayer();
+        }
+
         for (const player of this.players) {
             // если клкнули по дому или дочернему элементу дома игрока player
             if (player.home.contains(event.target)) {
@@ -180,7 +204,7 @@ export class Game {
 
         // ! 4 - это сколько всего пешек у игрока.
         // Возможно, следует импортировтаь класс Player и использовать константу Player.allPawns
-        if (player.homePawnsNum != 4 && this.dice.num != 6) { 
+        if (player.homePawnsNum != (4 - player.blockedFinishSlots.size) && this.dice.num != 6) { 
             return "you've got a free pawn and the dice number is not 6. Choose another pawn."
         }
 
@@ -204,7 +228,7 @@ export class Game {
         */
 
 
-        this.makeNextPlayerCurrentPlayer();
+        this.#makeNextPlayerCurrentPlayer();
     }
 
     // ! Возможно, лучше передавать event.target
@@ -225,7 +249,7 @@ export class Game {
             throw new Error("Something's wrong! A slot doesn't have an index!");
         }
 
-
+        
         const currentPlayer = this.currentPlayer;
         // если rightTurn = true, кликнутая пешка принадлежит текущему игроку
         const rightTurn = currentPlayer.hasPawnOnPosition(clickedSlotIndex);
@@ -237,8 +261,39 @@ export class Game {
 
         const newPos = Game.#getPotentialNewPos(clickedSlotIndex, this.dice.num);
 
-        // ! перед проверкой ниже добавить проверку, не прошли ли круг пешкой
 
+
+        // мы перешагнули старт, если количество клеток от стартовой позиции по часовой стрелки
+        // до предыдущего положения больше, чем до следующего
+        const newDistance = (Game.#slotsNum + newPos - currentPlayer.startPosition) % Game.#slotsNum;
+        const oldDistance = (Game.#slotsNum + clickedSlotIndex - currentPlayer.startPosition) % Game.#slotsNum;
+
+        //console.log(`new ${newDistance},old ${oldDistance}`)
+
+        if (newDistance < oldDistance) {
+            if (newDistance > 3) {
+                return "Пешка перепрыгнула финиш";
+            }
+            if (currentPlayer.blockedFinishSlots.has(newDistance)) {
+                return `На финешном слоте ${newDistance + 1} уже есть пешка`;
+            }
+            currentPlayer.blockedFinishSlots.add(newDistance);
+            currentPlayer.pawnsOnField.delete(clickedSlotIndex);
+            const finishSlotEl = currentPlayer.finish.querySelector(`.finish-slot[data-index="${newDistance}"]`);
+            console.log(`.finishSlot[data-index = "${newDistance}"]`);
+            Game.#movePawnElement(clickedSlot, finishSlotEl);
+            this.#makeNextPlayerCurrentPlayer();
+
+            if (currentPlayer.blockedFinishSlots.size === 4) {
+                location.href = "youWon.html";
+            }
+
+            return;
+
+
+        }
+        
+        
 
         const attackResult = this.#curPlayerAattackHandler(newPos);
         if (attackResult.standsOnOwnPawn) {
@@ -250,6 +305,6 @@ export class Game {
 
         Game.#movePawnElement(clickedSlot, Game.getSlotByIndex(newPos));
 
-        this.makeNextPlayerCurrentPlayer();
+        this.#makeNextPlayerCurrentPlayer();
     }
 }
