@@ -14,9 +14,6 @@ body {
 .field {
 	height: 84vmin;
 	width: 84vmin;
-	min-height: 300px;
-	min-width: 300px;
-	color: black;
 }
 
 .current-player-color-indicator {
@@ -41,7 +38,7 @@ body {
 	border-radius: 50%;
 	border: 1px solid grey;
 	box-sizing: border-box;
-	opacity: 0.85;
+	/*opacity: 0.85;*/
 }
 
 .feildSlot {
@@ -58,7 +55,7 @@ body {
 }
 
 .activeSlot:hover {
-		opacity: 1
+		opacity: 1;
 }
 
 
@@ -79,7 +76,6 @@ body {
 	margin: 0px 1vmin;
 	/*border: solid 0.5vmin;*/
 	position:absolute;
-	/*display:none;*/
 }
 
 .home-slot {
@@ -102,19 +98,31 @@ body {
 }
 
 .non-board-elements {
+	display: flex;
+	flex-direction: row;
+	margin-top: 3vh;
 	align-self: baseline;
+	width: 100%;
 }
 
 .non-board-elements > * {
-	display: inline-block;
+		display: inline-block;
+		margin-top: 2vh;
 }
 
 .skip-move {
-	margin-left: auto;
+	padding: 0.5vmin 1vmin;
+	min-height: 3vmin;
+	margin-right: 1vmin;
 }
 
 .message-box {
-	min-height:1vh;
+	height: 3vh;
+	width: 65vmin;
+	border: 0.2vmin solid gray;
+	overflow: overlay;
+	border-radius: 1vmin;
+	padding: 0.5vmin 1vmin;
 }
 
 

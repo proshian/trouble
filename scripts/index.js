@@ -5,39 +5,20 @@ import { Dice } from './Dice.js';
 
 gameInitialization();
 
-function createPawnElement() {
-	useTag = document.createElement('use');
-	useTag.href = 'img/pawn.svg#pawn';
-	svgPawn = document.createElement('svg');
-	svgPawn.classList.add('pawn');
-	svgPawn.appendChild(useTag);
-	return svgPawn;
-}
-
 function gameInitialization() {
-	// этот код позволяет инициализировать интерфейс, если в него добавлены не все пешки
-	const homeSlots = document.querySelectorAll('.home-slot');
-	for (const homeSlot of homeSlots) {
-		const pawnELement = homeSlot.querySelector('.pawn');
-		if (!pawnELement) {
-			homeSlot.appendChild(
-				createPawnElement()
-			);
-		}
-	}
-
+	// во все слоты всех домов добавить пешки, если их нет
+	fillEmptyHomeSolts()
 
 	const players = [];
 
 	const colors = Array.from(Player.colors);	// получим массив цветов игроков
 	//shuffleArray(colors);
-
 	const startPositions = Array.from(Player.startPositions); // массив стартовых позиций
 	//shuffleArray(startPositions);
 
 	const homes = document.querySelectorAll('.home');
 
-	console.log(colors);
+	//console.log(colors);
 	// цикл ниже - временный способ инициализирвать игру
 	for (let i = 0; i < 4; i++) {
 		const color = colors[i];	// ! изменить
@@ -70,6 +51,32 @@ function gameInitialization() {
 		document.querySelector('.message-box'),
 	);
 }
+
+
+function createPawnElement() {
+	const useTag = document.createElement('use');
+	useTag.href = "img/pawn.svg#pawn";
+	const svgPawn = document.createElement('svg');
+	svgPawn.classList.add('pawn');
+	svgPawn.appendChild(useTag);
+
+	return svgPawn;
+
+}
+
+function fillEmptyHomeSolts() {
+	const homeSlots = document.querySelectorAll('.home-slot');
+	for (const homeSlot of homeSlots) {
+		const pawnELement = homeSlot.querySelector('.pawn');
+		if (pawnELement == null) {
+			homeSlot.appendChild(
+				createPawnElement()
+			);
+		}
+	}
+}
+
+
 
 /*
 function shuffleArray(array) {

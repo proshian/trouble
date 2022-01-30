@@ -13,15 +13,13 @@ export function boardCreation(players) {
 	// затем сдвигаю еще на 45 градусов. Теперь конечные позиции на "диагонали"
 	const offset = players[0].endPosition * 2 * Math.PI / slotsNum + Math.PI / 4;
 
-	console.log("currrent");
-
 
 	for (let i = 0; i < slotsNum; i++) {
 		// угол
 		// отрицателен, чтобы слоты расположились "по часовой стрелке"
 		const theta = -2 * Math.PI * i / slotsNum + offset;
 
-		console.log(`i=${i}, thta = ${theta}`);
+		//console.log(`i=${i}, thta = ${theta}`);
 		
 		const slot = createFieldSlot(
 			i,
@@ -43,7 +41,7 @@ export function boardCreation(players) {
 	for (const [endPos, color] of endPositions) {
 		const theta = -2 * Math.PI * endPos / slotsNum + offset;
 
-		console.log(endPos);
+		//console.log(endPos);
 
 		const finish = createFinishAndSlots(theta, finishRadius, color);
 

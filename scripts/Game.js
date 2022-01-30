@@ -85,7 +85,7 @@ export class Game {
     }
 
     static #movePawnElement(source, dest) {
-        console.log("dest"+dest);
+        //console.log("dest"+dest);
         const pawnElem = source.firstElementChild;
 
         if (pawnElem == null) {
@@ -139,10 +139,12 @@ export class Game {
         this.dice.throwDice();
         this.updateColorIndicator();
 
+        /*
         console.log("состояние игры:");
         for (const player of this.players) {
             console.log(player.color, player.pawnsOnField, player.blockedFinishSlots);
         }
+        */
     }
 
     #curPlayerAattackHandler(newPos) {
@@ -183,7 +185,6 @@ export class Game {
     move(event) {
         this.messageDisplay.innerText = "";
         if (document.querySelector('.skip-move').contains(event.target)) {
-            console.log("cu");
             return this.#makeNextPlayerCurrentPlayer();
         }
 
@@ -225,7 +226,7 @@ export class Game {
             Game.#getPreviousPos(player.startPosition),
             this.dice.num
         );
-        console.log(newPos);
+        //console.log(newPos);
 
         const attackResult = this.#curPlayerAattackHandler(newPos);
         if (attackResult.standsOnOwnPawn) {
@@ -271,8 +272,7 @@ export class Game {
         
         if (!rightTurn) {
             this.setMessage(
-                `Текущий игрок с цветом ${currentPlayer.color}.
-                Кликните по фишке этого цвета или пропустите ход`
+                `Текущий игрок с цветом ${currentPlayer.color}. Кликните по фишке этого цвета или пропустите ход`
             );
             return;
         }
