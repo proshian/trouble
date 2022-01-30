@@ -1,24 +1,165 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <title>Trouble</title>
-    <link rel="stylesheet" href="styles/index.css" />
-    <link rel="stylesheet" href="styles/common.css" />
+	<meta charset="UTF-8" />
+	<title>Trouble</title>
+	<link rel="stylesheet" href="styles/interface1.css" />
+	<link rel="stylesheet" href="styles/common.css" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
+	<div class="game centering-parent">
+		<div class="board-elements centering-parent">
 
-    <div class="centering-parent button-container">
-        <div>
-            <a class="button" href="interface1.html">
-                    interface 1
-            </a>
 
-            <a class="button" href="interface2.html">
-                    interface 2 (временно не поддерживается)
-            </a>
-        </div>
-    </div>
+			
 
+			<div class="field centering-parent">
+
+
+
+
+				<button type="button" class="home home-top-right">
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+				</button>
+
+				<button type="button" class="home  home-bottom-right">
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+				</button>
+
+
+
+
+
+
+
+				<!-- возможно, стоит добавить 6 картинок и переключать у них display:none + использовать тег image -->
+				<div class="current-player-color-indicator centering-parent">
+					<div class="dice"></div>
+				</div>
+				
+
+
+
+
+
+
+
+
+				<button type="button" class="home home-bottom-left">
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+				</button>
+
+
+				<button type="button" class="home home-top-left">
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+
+					<div class="slot home-slot">
+						<svg class="pawn">
+							<use xlink:href="img/pawn.svg#pawn" />
+						</svg>
+					</div>
+				</button>
+
+			</div>
+
+
+			
+
+			<div class="non-board-elements">
+				<div><button class="skip-move">пропустить ход</button></div>
+				<div class="message-box"><p class= "message"></p></div>
+			</div>
+
+		</div>
+		
+	</div>
+
+	<script type="module" src="scripts/index.js"></script>
 </body>
 </html>
