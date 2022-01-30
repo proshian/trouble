@@ -3,7 +3,7 @@ export class Player {
 	static allPawns = 4; // у игрока всегда суммарное число пешек равно 4
 
 	static colors = new Set(
-		['red', 'green', 'yellow', 'blue']
+		['blue', 'yellow', 'green', 'red']
 	);
 
 	static startPositions = new Set(

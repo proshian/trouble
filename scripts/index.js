@@ -48,7 +48,7 @@ function gameInitialization() {
 		dice,
 		colorIndicator,
 		gameDiv,
-		document.querySelector('.message-box'),
+		document.querySelector('.message'),
 	);
 }
 

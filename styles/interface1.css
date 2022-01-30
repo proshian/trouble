@@ -75,7 +75,18 @@ body {
 	background-color: black;*/
 	margin: 0px 1vmin;
 	/*border: solid 0.5vmin;*/
-	position:absolute;
+	position: absolute;
+	border-radius: 2vmin;
+	appearance: none;
+	border:none;
+}
+
+.active:hover {
+	cursor: pointer;
+}
+
+.inactive:hover {
+	cursor: not-allowed;
 }
 
 .home-slot {
@@ -112,19 +123,24 @@ body {
 
 .skip-move {
 	padding: 0.5vmin 1vmin;
-	min-height: 3vmin;
+	min-height: 6vmin;
 	margin-right: 1vmin;
+	font-family: 'Roboto', sans-serif;
 }
 
 .message-box {
-	height: 3vh;
+	height: 6vmin;
 	width: 65vmin;
 	border: 0.2vmin solid gray;
 	overflow: overlay;
 	border-radius: 1vmin;
 	padding: 0.5vmin 1vmin;
+	font-family: 'Roboto', sans-serif;
 }
 
+.message {
+	margin:0px;
+}
 
 .home-top-right {
 	transform: rotate(-45deg) translate(43vmin);

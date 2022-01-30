@@ -132,12 +132,41 @@ export class Game {
         Game.#movePawnElement(fieldSlot, lastEmptySlot);
     }
 
+
+    static #removeActive(player) {
+        player.home.classList.remove('active');
+        player.home.classList.add('inactive');
+        /*
+        for (const index of player.pawnsOnField) {
+            const classList = Game.getSlotByIndex(index).classList;
+            classList.remove('active');
+            classList.add('inactive');
+        }
+        */
+    }
+
+    static #addActive(player) {
+        player.home.classList.add('active');
+        player.home.classList.remove('inactive');
+        /*
+        for (const index of player.pawnsOnField) {
+            Game.getSlotByIndex(index).classList.add('active');
+            const classList = Game.getSlotByIndex(index).classList;
+            classList.add('active');
+            classList.remove('inactive');
+        }
+        */
+    }
+
+
     // передача хода
     #makeNextPlayerCurrentPlayer() {
+        Game.#removeActive(this.currentPlayer);
         this.messageDisplay.innerText = "";
         this.curOrder = (this.curOrder + 1) % 4;
         this.dice.throwDice();
         this.updateColorIndicator();
+        Game.#addActive(this.currentPlayer);
 
         /*
         console.log("состояние игры:");
