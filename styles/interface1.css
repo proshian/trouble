@@ -3,21 +3,28 @@ body {
 }
 
 .game {
-	height: 92vh;
+	height: 100vh;
+	flex-direction: column;
+}
+
+.board-elements {
+	flex-direction:column;
 }
 
 .field {
-	height: 75.5vmin;
-	width: 75.5vmin;
+	height: 84vmin;
+	width: 84vmin;
 	min-height: 300px;
 	min-width: 300px;
 	color: black;
 }
 
 .current-player-color-indicator {
-	width: 10.3vmin;
-	height: 10.3vmin;
-	border-radius: 12%;
+	width: 12vmin;
+	height: 12vmin;
+	border-radius: 50%;
+	position:absolute;
+	/*transform:rotate(45deg);*/
 }
 
 
@@ -54,11 +61,15 @@ body {
 		opacity: 1
 }
 
+
+
 .dice {
 	width: 6.5vmin;
 	height: 6.5vmin;
 	background: no-repeat;
 	background-size: cover;
+	position: absolute;
+	border-radius: 13%;
 }
 
 .home {
@@ -67,6 +78,8 @@ body {
 	background-color: black;*/
 	margin: 0px 1vmin;
 	/*border: solid 0.5vmin;*/
+	position:absolute;
+	/*display:none;*/
 }
 
 .home-slot {
@@ -88,11 +101,53 @@ body {
 	width: 2.5vmin;
 }
 
+.non-board-elements {
+	align-self: baseline;
+}
 
-.non-board-elements > div {
+.non-board-elements > * {
 	display: inline-block;
 }
 
 .skip-move {
 	margin-left: auto;
+}
+
+.message-box {
+	min-height:1vh;
+}
+
+
+.home-top-right {
+	transform: rotate(-45deg) translate(43vmin);
+}
+
+.home-bottom-right {
+	transform: rotate(45deg) translate(43vmin);
+}
+
+.home-bottom-left {
+	transform: rotate(135deg) translate(43vmin);
+}
+
+.home-top-left {
+	transform: rotate(-135deg) translate(43vmin);
+}
+
+
+.home-top-right > .home-slot  {
+	transform: rotate(90deg);
+}
+
+.home-top-left > .home-slot {
+	transform: rotate(90deg);
+}
+
+
+.home-bottom-left > .home-slot {
+	transform: rotate(-90deg);
+}
+
+.home-bottom-right > .home-slot {
+	transform: rotate(-90deg);
 }
