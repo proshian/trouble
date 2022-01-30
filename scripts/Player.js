@@ -1,11 +1,16 @@
+/**
+	* Игрок
+*/
 export class Player {
-
+	/** @type { number } */
 	static allPawns = 4; // у игрока всегда суммарное число пешек равно 4
 
+	/** @type { Set<number> } */
 	static colors = new Set(
 		['blue', 'yellow', 'green', 'red']
 	);
 
+	/** @type { Set<number> } */
 	static startPositions = new Set(
 		[0, 7, 14, 21]	// ! возможно лучше не хардкодить, а генерировать
 						// это же просто (prevEl+7)%28
@@ -39,6 +44,15 @@ export class Player {
 		return Player.allPawns - this.blockedFinishSlots.size - this.pawnsOnField.size;
 	}
 
+	/**
+	 * Игрок
+	 *
+	 * @param {number} startPosition стартовая позиция
+	 * @param {string} color Цвет (подставляется в HTML элементы, имеющие отношение к игроку)
+	 * @param {number} order Очередность в игре
+	 * @param {HTMLElement} home HTML элемент дома грока
+	 * @param {HTMLElement} finish HTML элемент финиша грока
+	 */
 	constructor(startPosition, color, order, home, finish) {
 		if (!Player.startPositions.has(startPosition))
 			throw new Error(`Incorrect start position value: "${startPosition}"`);
@@ -56,7 +70,11 @@ export class Player {
 
     }
 
-
+	/**
+	 * Проверяет наличие пешки на позиции
+	 *
+	 * @param {number} pos Проверяемая позиция
+	 */
 	hasPawnOnPosition(pos) {	// если нужна то только ради абстракции
 		return this.pawnsOnField.has(pos);
 	}

@@ -26,6 +26,16 @@ export class Game {
         return this.players[this.curOrder];
     }
 
+
+    /**
+     * Игра
+     *
+     * @param {Array<Player>} players Массив игроков-участников игры
+     * @param {Dice} dice Игральный кубик
+     * @param {HTMLElement} colorIndicator Цветовой индикатор текущего игрока
+     * @param {HTMLElement} gameDiv div, содржащий все элементы игры
+     * @param {HTMLElement} messageDisplay Элемент для вывода сообщений для игрока
+     */
     constructor(players, dice, colorIndicator, gameDiv, messageDisplay) {
         this.players = players;
         this.curOrder = 0;
@@ -63,27 +73,59 @@ export class Game {
         );
     }
 
+
+
+    /**
+     * Возвращает слот поля, имеющий индекс, который передан как аругмент
+     *
+     * @param {nuber} index Индекс слота поля
+     */
     static getSlotByIndex(index) {
-        //return document.querySelector(`div.field>.feildSlot[data-index = "${index}"]`);
         return document.querySelector(`.feildSlot[data-index = "${index}"]`);
     }
 
+    /**
+     * Возвращает индекс слота поля, на который встанет пешка, если ей ничего не помешает
+     * 
+     * @param {number} curPos Индекс слота поля, на котором стояла перемещаемая пешка до хода
+     * @param {diceNum} curPos Число на кубике
+     */
     static #getPotentialNewPos(curPos, diceNum) {
         return (curPos + diceNum) % Game.#slotsNum;
     }
 
+    /**
+     * Возвращает предыдущий слот поля
+     *
+     * @param {number} pos Слот поля, для которого ищем предыдущий
+     */
     static #getPreviousPos(pos) {
         return (pos + Game.#slotsNum - 1) % Game.#slotsNum;
     }
 
+    /**
+     * Выводит сообщение на окно для сообщений
+     *
+     * @param {string} message Сообщение для пользователя
+     */
     setMessage(message) {
         this.messageDisplay.innerText = message;
     }
 
+    /**
+     * Обовляет цветовой индикатор текущего игрока
+     */
     updateColorIndicator() {
         this.colorIndicator.style.backgroundColor = this.players[this.curOrder].color;
     }
 
+
+    /**
+     * перемещает HTML элемент пешки из старого родителя в новый
+     *
+     * @param {HTMLElement} source Исходный родитель элемента пешки
+     * @param {HTMLElement} dest Новый родитель элемента пешки
+     */
     static #movePawnElement(source, dest) {
         //console.log("dest"+dest);
         const pawnElem = source.firstElementChild;
@@ -95,13 +137,16 @@ export class Game {
         if (!pawnElem.classList.contains('pawn')) {
             throw new Error("Something's wrong: an attempt to move a non-pawn object!");
         }
-
-        //dest.appendChild(source.removeChild(pawnElem));
-
         // appendChild перенесет элемент в dest, убрав его из исходного места в DOM
         dest.appendChild(pawnElem); 
     }
 
+    /**
+     * перемещает HTML элемент пешки из дома в слот поля
+     *
+     * @param {Player} player Исходный родитель элемента пешки
+     * @param {number} index Новый родитель элемента пешки
+     */
     static #movePawnElementFromHomeToFeild(player, index) {
         Game.#movePawnElement(
             player.home.querySelector('.pawn').parentElement,
@@ -111,8 +156,12 @@ export class Game {
 
     
 
-    
-
+    /**
+    * перемещает пешку ("логическую") c поля в дом
+    *
+    * @param {Player} victimPlayer Игрок, пешка которого будт перемещена в дом
+    * @param {number} curPos позиция пешки, которая будет перенесена в дом
+    */
     static #movePawnToHome(victimPlayer, curPos) { // ! Возмжно, лучше сделать методом Player'а
         victimPlayer.pawnsOnField.delete(curPos);
         //curPosSlot.style.backgroundColor = attackerPlayer.color;
