@@ -1,7 +1,3 @@
-// !!!!!!! сообщения в move'ах нужно отрисовывать на табло для сообщений, а не возвращать
-// тут важно не забыть сообщение в attakHandler
-
-
 export class Game {
     /** @type {Array<Player>} */
     players;
@@ -183,9 +179,10 @@ export class Game {
 
 
     static #removeActive(player) {
+        /*
         player.home.classList.remove('active');
         player.home.classList.add('inactive');
-        /*
+        
         for (const index of player.pawnsOnField) {
             const classList = Game.getSlotByIndex(index).classList;
             classList.remove('active');
@@ -195,9 +192,10 @@ export class Game {
     }
 
     static #addActive(player) {
+        /*
         player.home.classList.add('active');
         player.home.classList.remove('inactive');
-        /*
+        
         for (const index of player.pawnsOnField) {
             Game.getSlotByIndex(index).classList.add('active');
             const classList = Game.getSlotByIndex(index).classList;
@@ -314,11 +312,6 @@ export class Game {
         
         player.pawnsOnField.add(newPos);
         Game.#movePawnElementFromHomeToFeild(player, newPos);
-        /*
-        const pawnImg = document.createElement('img');
-        pawnImg.src = "img/pawn.svg";
-        Game.getSlotByIndex(newPos).appendChild(pawnImg);
-        */
 
 
         this.#makeNextPlayerCurrentPlayer();

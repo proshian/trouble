@@ -19,7 +19,7 @@ function gameInitialization() {
 	const homes = document.querySelectorAll('.home');
 
 	//console.log(colors);
-	// цикл ниже - временный способ инициализирвать игру
+	// цикл ниже - временный способ инициализирвать игроков
 	for (let i = 0; i < 4; i++) {
 		const color = colors[i];	// ! изменить
 
