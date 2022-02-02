@@ -65,6 +65,7 @@ export class Player {
 		this.order = order;
 		this.home = home;
 		this.home.style.backgroundColor = this.color;
+		//this.home.style.border = `0.5vmin solid ${this.color}`;
 
 		this.hasPawnOnPosition = this.hasPawnOnPosition.bind(this);
 

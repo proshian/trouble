@@ -65,7 +65,10 @@ export class Game {
 
         document.querySelector('.skip-move').addEventListener(
             'click',
-            () => this.#makeNextPlayerCurrentPlayer(),
+            () => {
+                console.log("cucu");
+                this.#makeNextPlayerCurrentPlayer();
+            },
         );
     }
 
@@ -261,7 +264,13 @@ export class Game {
     move(event) {
         this.messageDisplay.innerText = "";
         if (document.querySelector('.skip-move').contains(event.target)) {
-            return this.#makeNextPlayerCurrentPlayer();
+            // кнопку пропуска хода обрабатывает отдельный eventListener
+            // если тут тоже вызывать передачу хода, она будет передаваться не следующему,
+            // а следующему, относительно следующего
+            // эту проверку можно было бы убрать, 
+            // потому что даже если  кнопка пропуска хода находилась бы в field div'е,
+            //  в moveFromField первым делом проверяется, что мы нажали на слот поля
+            return; 
         }
 
         for (const player of this.players) {
