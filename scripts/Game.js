@@ -65,10 +65,7 @@ export class Game {
 
         document.querySelector('.skip-move').addEventListener(
             'click',
-            () => {
-                console.log("cucu");
-                this.#makeNextPlayerCurrentPlayer();
-            },
+            () => this.#makeNextPlayerCurrentPlayer(),
         );
     }
 
